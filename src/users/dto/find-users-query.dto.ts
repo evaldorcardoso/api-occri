@@ -11,4 +11,6 @@ export class FindUsersQueryDto extends BaseQueryParametersDto {
 
   @ApiProperty()
   role: UserRole;
+
+  is_active = true;
 }

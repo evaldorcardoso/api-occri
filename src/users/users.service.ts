@@ -26,7 +26,7 @@ export class UsersService {
 
   async findUserByUuid(uuid: string): Promise<ReturnUserDto> {
     const user = await this.userRepository.findOne(
-      { uuid },
+      { uuid, is_active: true },
       {
         select: ['email', 'name', 'role', 'uuid'],
       },
@@ -38,7 +38,10 @@ export class UsersService {
   }
 
   async updateUser(updateUserDto: UpdateUserDto, uuid: string) {
-    const result = await this.userRepository.update({ uuid }, updateUserDto);
+    const result = await this.userRepository.update(
+      { uuid, is_active: true },
+      updateUserDto,
+    );
     if (result.affected === 0) {
       throw new NotFoundException('Usuário não encontrado');
     }
@@ -46,8 +49,11 @@ export class UsersService {
     return user;
   }
 
-  async deleteUser(userUuid: string) {
-    const result = await this.userRepository.delete({ uuid: userUuid });
+  async deleteUser(uuid: string) {
+    const result = await this.userRepository.update(
+      { uuid },
+      { is_active: false },
+    );
     if (result.affected === 0) {
       throw new NotFoundException('Usuário não encontrado');
     }

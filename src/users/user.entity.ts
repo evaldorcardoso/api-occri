@@ -33,6 +33,9 @@ export class User extends BaseEntity {
   @Column({ type: 'simple-enum', enum: UserRole, default: UserRole.USER })
   role: UserRole;
 
+  @Column({ nullable: false, default: true })
+  is_active: boolean;
+
   @CreateDateColumn()
   created_at: Date;
 
