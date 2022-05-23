@@ -8,6 +8,7 @@ async function bootstrap() {
     .setDescription('API to manage OCCRI System')
     .setVersion('0.0.1')
     .addTag('Users')
+    .addTag('Spaces')
     .addBearerAuth({
       description: 'Please enter token in following format: Bearer <JWT>',
       name: 'Authorization',

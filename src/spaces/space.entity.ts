@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Generated,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
@@ -15,6 +16,7 @@ export class Space extends BaseEntity {
   id: number;
 
   @Column({ nullable: false, type: 'varchar' })
+  @Generated('uuid')
   uuid: string;
 
   @Column({ nullable: false, type: 'varchar', length: 200 })

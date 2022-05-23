@@ -38,15 +38,15 @@ import { FirebaseAuthGuard } from 'src/auth/firebase-auth.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  @Role(UserRole.ADMIN)
-  @ApiOperation({ summary: 'Create a new Admin User' })
-  @ApiCreatedResponse({ type: ReturnUserDto })
-  async createAdminUser(
-    @Body(ValidationPipe) createUserDto: CreateUserDto,
-  ): Promise<ReturnUserDto> {
-    return await this.usersService.createAdminUser(createUserDto);
-  }
+  // @Post()
+  // @Role(UserRole.ADMIN)
+  // @ApiOperation({ summary: 'Create a new Admin User' })
+  // @ApiCreatedResponse({ type: ReturnUserDto })
+  // async createAdminUser(
+  //   @Body(ValidationPipe) createUserDto: CreateUserDto,
+  // ): Promise<ReturnUserDto> {
+  //   return await this.usersService.createAdminUser(createUserDto);
+  // }
 
   @Get(':uuid')
   @Role(UserRole.ADMIN)

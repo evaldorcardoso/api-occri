@@ -15,7 +15,8 @@ export class SpacesService {
   ) {}
 
   async create(createSpaceDto: CreateSpaceDto): Promise<ReturnSpaceDto> {
-    const space = await this.spacesRepository.create(createSpaceDto);
+    const space = this.spacesRepository.create(createSpaceDto);
+    await this.spacesRepository.save(space);
     return new ReturnSpaceDto(space);
   }
 
@@ -24,7 +25,7 @@ export class SpacesService {
   }
 
   async findOne(uuid: string): Promise<ReturnSpaceDto> {
-    const space = await this.spacesRepository.findOne(uuid);
+    const space = await this.spacesRepository.findOne({ uuid });
     if (!space) {
       throw new Error('Espaço não encontrado');
     }
@@ -35,16 +36,16 @@ export class SpacesService {
     uuid: string,
     updateSpaceDto: UpdateSpaceDto,
   ): Promise<ReturnSpaceDto> {
-    const result = await this.spacesRepository.update(uuid, updateSpaceDto);
+    const result = await this.spacesRepository.update({ uuid }, updateSpaceDto);
     if (result.affected === 0) {
       throw new Error('Espaço não encontrado');
     }
-    const space = await this.spacesRepository.findOne(uuid);
+    const space = await this.spacesRepository.findOne({ uuid });
     return new ReturnSpaceDto(space);
   }
 
   async remove(uuid: string) {
-    const result = await this.spacesRepository.delete(uuid);
+    const result = await this.spacesRepository.delete({ uuid });
     if (result.affected === 0) {
       throw new Error('Espaço não encontrado');
     }
