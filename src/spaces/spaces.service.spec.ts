@@ -21,6 +21,7 @@ describe('SpacesService', () => {
           provide: SpacesRepository,
           useValue: {
             create: jest.fn(),
+            save: jest.fn(),
             findOne: jest.fn(),
             findSpaces: jest.fn(),
             update: jest.fn(),
@@ -50,6 +51,9 @@ describe('SpacesService', () => {
     const resolvedSpace = new ReturnSpaceDto(space);
 
     jest.spyOn(repository, 'create').mockImplementationOnce(() => space);
+    jest.spyOn(repository, 'save').mockImplementationOnce(() => {
+      return Promise.resolve(space);
+    });
 
     const data = await service.create(createSpaceDto);
 

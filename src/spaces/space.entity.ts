@@ -1,9 +1,11 @@
+import { Plan } from '../plans/plan.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
   Generated,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
@@ -24,6 +26,9 @@ export class Space extends BaseEntity {
 
   @Column({ nullable: false, type: 'longtext' })
   description: string;
+
+  @OneToMany(() => Plan, (plan) => plan.space)
+  plans: Plan[];
 
   @CreateDateColumn()
   created_at: Date;

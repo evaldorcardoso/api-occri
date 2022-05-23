@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
   Param,
@@ -12,24 +11,22 @@ import {
   Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ReturnUserDto } from './dto/return-user.dto';
 import { User } from './user.entity';
 import { FindUsersQueryDto } from './dto/find-users-query.dto';
 import {
   ApiBearerAuth,
-  ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
 import { ReturnFindUsersDto } from './dto/return-find-users.dto';
 import { GetUser } from '../auth/get-user.decorator';
-import { Role } from 'src/auth/role.decorator';
+import { Role } from '../auth/role.decorator';
 import { UserRole } from './user-roles.enum';
-import { RolesGuard } from 'src/auth/roles.guard';
-import { FirebaseAuthGuard } from 'src/auth/firebase-auth.guard';
+import { RolesGuard } from '../auth/roles.guard';
+import { FirebaseAuthGuard } from '../auth/firebase-auth.guard';
 
 @Controller('users')
 @UseGuards(FirebaseAuthGuard, RolesGuard)

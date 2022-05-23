@@ -19,11 +19,11 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { FirebaseAuthGuard } from 'src/auth/firebase-auth.guard';
-import { RolesGuard } from 'src/auth/roles.guard';
+import { FirebaseAuthGuard } from '../auth/firebase-auth.guard';
+import { RolesGuard } from '../auth/roles.guard';
 import { ReturnSpaceDto } from './dto/return-space.dto';
-import { Role } from 'src/auth/role.decorator';
-import { UserRole } from 'src/users/user-roles.enum';
+import { Role } from '../auth/role.decorator';
+import { UserRole } from '../users/user-roles.enum';
 import { ReturnFindSpacesDto } from './dto/return-find-spaces.dto';
 import { FindSpacesQueryDto } from './dto/find-spaces-query.dto';
 
