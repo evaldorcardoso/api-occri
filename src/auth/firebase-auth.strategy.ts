@@ -56,7 +56,6 @@ export class FirebaseAuthStrategy extends PassportStrategy(
     }
 
     user.email = firebaseUser.email ? firebaseUser.email : user.email;
-    user.name = firebaseUser.displayName ? firebaseUser.displayName : user.name;
     user.picture = firebaseUser.photoURL ? firebaseUser.photoURL : user.picture;
     user.email_verified = firebaseUser.emailVerified
       ? firebaseUser.emailVerified
