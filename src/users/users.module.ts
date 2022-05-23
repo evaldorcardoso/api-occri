@@ -3,15 +3,11 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersRepository } from './users.repository';
-import { PassportModule } from '@nestjs/passport';
-import { AuthStrategy } from 'src/auth/auth.strategy';
+import { FirebaseAuthStrategy } from 'src/auth/firebase-auth.strategy';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([UsersRepository]),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
-  ],
-  providers: [UsersService, AuthStrategy],
+  imports: [TypeOrmModule.forFeature([UsersRepository])],
+  providers: [UsersService, FirebaseAuthStrategy],
   controllers: [UsersController],
 })
 export class UsersModule {}
