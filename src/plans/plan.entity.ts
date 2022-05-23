@@ -28,7 +28,7 @@ export class Plan extends BaseEntity {
   @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
   value: number;
 
-  @Column({ nullable: false, type: 'longtext' })
+  @Column({ nullable: true, type: 'longtext' })
   description: string;
 
   @ManyToOne(() => Space, (space) => space.plans, {

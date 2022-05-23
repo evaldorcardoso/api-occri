@@ -52,12 +52,15 @@ describe('PlansService', () => {
     createPlanDto.description = faker.lorem.sentence();
     createPlanDto.value = parseFloat(faker.commerce.price());
 
+    const space = new Space();
+    space.id = faker.random.number();
+
     const plan = new Plan();
     plan.uuid = faker.unique.toString();
     plan.name = createPlanDto.name;
     plan.description = createPlanDto.description;
     plan.value = createPlanDto.value;
-    plan.space = new Space();
+    plan.space = space;
     const resolvedPlan = new ReturnPlanDto(plan);
 
     jest.spyOn(repository, 'create').mockImplementationOnce(() => plan);
@@ -65,7 +68,7 @@ describe('PlansService', () => {
       return Promise.resolve(plan);
     });
 
-    const data = await service.create(createPlanDto);
+    const data = await service.create(space, createPlanDto);
 
     expect(data).toEqual(resolvedPlan);
   });

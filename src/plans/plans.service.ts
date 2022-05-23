@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Space } from 'src/spaces/space.entity';
 import { SpacesRepository } from '../spaces/spaces.repository';
 import { CreatePlanDto } from './dto/create-plan.dto';
 import { ReturnPlanDto } from './dto/return-plan.dto';
@@ -15,8 +16,12 @@ export class PlansService {
     private spacesRepository: SpacesRepository,
   ) {}
 
-  async create(createPlanDto: CreatePlanDto): Promise<ReturnPlanDto> {
+  async create(
+    space: Space,
+    createPlanDto: CreatePlanDto,
+  ): Promise<ReturnPlanDto> {
     const plan = this.plansRepository.create(createPlanDto);
+    plan.space = space;
     await this.plansRepository.save(plan);
     return new ReturnPlanDto(plan);
   }
