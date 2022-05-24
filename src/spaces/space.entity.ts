@@ -10,6 +10,7 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
+import { Booking } from 'src/bookings/booking.entity';
 
 @Entity()
 @Unique(['uuid'])
@@ -29,6 +30,9 @@ export class Space extends BaseEntity {
 
   @OneToMany(() => Plan, (plan) => plan.space)
   plans: Plan[];
+
+  @OneToMany(() => Booking, (booking) => booking.space)
+  bookings: Booking[];
 
   @CreateDateColumn()
   created_at: Date;

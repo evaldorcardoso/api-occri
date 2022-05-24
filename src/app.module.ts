@@ -5,6 +5,7 @@ import { getConnectionOptions } from 'typeorm';
 import { UsersModule } from './users/users.module';
 import { SpacesModule } from './spaces/spaces.module';
 import { PlansModule } from './plans/plans.module';
+import { BookingsModule } from './bookings/bookings.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { PlansModule } from './plans/plans.module';
     UsersModule,
     SpacesModule,
     PlansModule,
+    BookingsModule,
   ],
 })
 export class AppModule {}

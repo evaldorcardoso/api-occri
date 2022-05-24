@@ -1,8 +1,10 @@
+import { Booking } from 'src/bookings/booking.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
@@ -35,6 +37,9 @@ export class User extends BaseEntity {
 
   @Column({ nullable: false, default: true })
   is_active: boolean;
+
+  @OneToMany(() => Booking, (booking) => booking.user)
+  bookings: Booking[];
 
   @CreateDateColumn()
   created_at: Date;

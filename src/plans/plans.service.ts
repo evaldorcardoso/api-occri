@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Space } from 'src/spaces/space.entity';
 import { SpacesRepository } from '../spaces/spaces.repository';
@@ -38,7 +38,7 @@ export class PlansService {
   async findOne(uuid: string): Promise<ReturnPlanDto> {
     const plan = await this.plansRepository.findOne({ uuid });
     if (!plan) {
-      throw new Error('Plano não encontrado');
+      throw new NotFoundException('Plano não encontrado');
     }
     return new ReturnPlanDto(plan);
   }

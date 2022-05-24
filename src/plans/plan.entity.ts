@@ -8,9 +8,11 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Booking } from 'src/bookings/booking.entity';
 
 @Entity()
 @Index(['id', 'uuid'])
@@ -37,6 +39,9 @@ export class Plan extends BaseEntity {
   })
   @JoinColumn({ name: 'space_id' })
   space: Space;
+
+  @OneToMany(() => Booking, (booking) => booking.plan)
+  bookings: Booking[];
 
   @CreateDateColumn()
   created_at: Date;
