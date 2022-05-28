@@ -45,6 +45,14 @@ export class UsersController {
   //   return await this.usersService.createAdminUser(createUserDto);
   // }
 
+  @Get('me')
+  @Role(UserRole.ADMIN)
+  @ApiOperation({ summary: 'Get the logged user' })
+  @ApiOkResponse({ type: ReturnUserDto })
+  async findLoggedUser(@GetUser() user: User): Promise<ReturnUserDto> {
+    return new ReturnUserDto(user);
+  }
+
   @Get(':uuid')
   @Role(UserRole.ADMIN)
   @ApiOperation({ summary: 'Get an user by uuid' })

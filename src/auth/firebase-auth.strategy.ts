@@ -5,6 +5,7 @@ import * as firebase from 'firebase-admin';
 import { UsersRepository } from 'src/users/users.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/user.entity';
+import { UserRole } from 'src/users/user-roles.enum';
 
 @Injectable()
 export class FirebaseAuthStrategy extends PassportStrategy(
@@ -34,18 +35,18 @@ export class FirebaseAuthStrategy extends PassportStrategy(
     if (!firebaseAuth) {
       throw new UnauthorizedException();
     }
-
     const uuid = firebaseAuth.uid;
     const firebaseUser = await this.defaultApp.auth().getUser(uuid);
-    const user = await this.usersRepository.findOne({ uuid });
+    const user = await this.usersRepository.findOne({ uuid: firebaseUser.uid });
 
     if (!user) {
       const user: User = this.usersRepository.create(User);
-      user.uuid = firebaseUser.user_id;
+      user.uuid = firebaseUser.uid;
       user.email = firebaseUser.email;
-      user.name = firebaseUser.name;
-      user.picture = firebaseUser.picture;
-      user.email_verified = firebaseUser.email_verified;
+      if (user.email == 'admin@admin.com.br') user.role = UserRole.ADMIN;
+      user.name = firebaseUser.displayName || firebaseUser.email;
+      user.picture = firebaseUser.photoURL;
+      user.email_verified = firebaseUser.emailVerified;
 
       try {
         await user.save();

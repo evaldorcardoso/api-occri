@@ -26,7 +26,7 @@ export class User extends BaseEntity {
   @Column({ nullable: false, type: 'varchar', length: 100 })
   name: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ nullable: true, type: 'varchar' })
   picture: string;
 
   @Column({ nullable: false })
