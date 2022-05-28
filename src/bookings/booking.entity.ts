@@ -1,6 +1,6 @@
-import { Plan } from 'src/plans/plan.entity';
-import { Space } from 'src/spaces/space.entity';
-import { User } from 'src/users/user.entity';
+import { Plan } from '../plans/plan.entity';
+import { Space } from '../spaces/space.entity';
+import { User } from '../users/user.entity';
 import {
   BaseEntity,
   Column,

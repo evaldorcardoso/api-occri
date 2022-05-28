@@ -1,6 +1,6 @@
 import { UnprocessableEntityException } from '@nestjs/common';
-import { Plan } from 'src/plans/plan.entity';
-import { User } from 'src/users/user.entity';
+import { Plan } from '../plans/plan.entity';
+import { User } from '../users/user.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { Space } from '../spaces/space.entity';
 import { Booking } from './booking.entity';

@@ -10,7 +10,7 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import { Booking } from 'src/bookings/booking.entity';
+import { Booking } from '../bookings/booking.entity';
 
 @Entity()
 @Unique(['uuid'])

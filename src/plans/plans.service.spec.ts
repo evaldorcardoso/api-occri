@@ -1,5 +1,6 @@
 import faker from '@faker-js/faker';
 import { Test, TestingModule } from '@nestjs/testing';
+import { DeleteResult, UpdateResult } from 'typeorm';
 import { Space } from '../spaces/space.entity';
 import { SpacesRepository } from '../spaces/spaces.repository';
 import { CreatePlanDto } from './dto/create-plan.dto';
@@ -7,6 +8,22 @@ import { ReturnPlanDto } from './dto/return-plan.dto';
 import { Plan } from './plan.entity';
 import { PlansRepository } from './plans.repository';
 import { PlansService } from './plans.service';
+
+function createPlan(
+  uuid?: string,
+  name?: string,
+  description?: string,
+  value?: number,
+  space?: Space,
+): Plan {
+  const plan = new Plan();
+  plan.uuid = uuid || faker.unique.toString();
+  plan.name = name || faker.name.firstName();
+  plan.description = description || faker.lorem.sentence();
+  plan.value = value || faker.datatype.number();
+  plan.space = space || new Space();
+  return plan;
+}
 
 describe('PlansService', () => {
   let service: PlansService;
@@ -53,14 +70,15 @@ describe('PlansService', () => {
     createPlanDto.value = parseFloat(faker.commerce.price());
 
     const space = new Space();
-    space.id = faker.random.number();
+    space.id = faker.datatype.number(1);
 
-    const plan = new Plan();
-    plan.uuid = faker.unique.toString();
-    plan.name = createPlanDto.name;
-    plan.description = createPlanDto.description;
-    plan.value = createPlanDto.value;
-    plan.space = space;
+    const plan = createPlan(
+      null,
+      createPlanDto.name,
+      createPlanDto.description,
+      createPlanDto.value,
+      space,
+    );
     const resolvedPlan = new ReturnPlanDto(plan);
 
     jest.spyOn(repository, 'create').mockImplementationOnce(() => plan);
@@ -71,5 +89,60 @@ describe('PlansService', () => {
     const data = await service.create(space, createPlanDto);
 
     expect(data).toEqual(resolvedPlan);
+  });
+
+  it('should be able to find a plan by uuid', async () => {
+    const plan = createPlan();
+    const resolvedPlan = new ReturnPlanDto(plan);
+
+    jest.spyOn(repository, 'findOne').mockImplementationOnce(() => {
+      return Promise.resolve(plan);
+    });
+
+    const data = await service.findOne(plan.uuid);
+
+    expect(data).toEqual(resolvedPlan);
+  });
+
+  it('should be able to find plans by query string', async () => {
+    const plan = createPlan();
+    const anotherPlan = createPlan();
+
+    const resolvedPlans = [
+      new ReturnPlanDto(plan),
+      new ReturnPlanDto(anotherPlan),
+    ];
+
+    jest.spyOn(spacesRepository, 'findOne').mockImplementationOnce(() => {
+      return Promise.resolve(new Space());
+    });
+
+    jest.spyOn(repository, 'findPlans').mockImplementationOnce(() => {
+      return Promise.resolve(resolvedPlans);
+    });
+
+    const data = await service.findAll(faker.unique.toString());
+
+    expect(data).toEqual(resolvedPlans);
+  });
+
+  it('should be able to update a plan', async () => {
+    const plan = createPlan();
+    const resolvedPlan = new ReturnPlanDto(plan);
+
+    jest.spyOn(repository, 'update').mockResolvedValue(new UpdateResult());
+    jest.spyOn(repository, 'findOne').mockImplementationOnce(() => {
+      return Promise.resolve(plan);
+    });
+
+    const data = await service.update(plan.uuid, resolvedPlan);
+
+    expect(data).toEqual(resolvedPlan);
+  });
+
+  it('should be able to remove a plan', async () => {
+    jest.spyOn(repository, 'delete').mockResolvedValue(new DeleteResult());
+
+    await service.remove(faker.unique.toString());
   });
 });

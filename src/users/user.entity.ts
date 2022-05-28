@@ -1,4 +1,4 @@
-import { Booking } from 'src/bookings/booking.entity';
+import { Booking } from '../bookings/booking.entity';
 import {
   BaseEntity,
   Column,

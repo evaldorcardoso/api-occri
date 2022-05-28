@@ -15,12 +15,12 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { FirebaseAuthGuard } from 'src/auth/firebase-auth.guard';
-import { GetUser } from 'src/auth/get-user.decorator';
-import { Role } from 'src/auth/role.decorator';
-import { RolesGuard } from 'src/auth/roles.guard';
-import { UserRole } from 'src/users/user-roles.enum';
-import { User } from 'src/users/user.entity';
+import { FirebaseAuthGuard } from '../auth/firebase-auth.guard';
+import { GetUser } from '../auth/get-user.decorator';
+import { Role } from '../auth/role.decorator';
+import { RolesGuard } from '../auth/roles.guard';
+import { UserRole } from '../users/user-roles.enum';
+import { User } from '../users/user.entity';
 import { BookingsService } from './bookings.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { FindBookingsQueryDto } from './dto/find-bookings-query.dto';
