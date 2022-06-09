@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-@Index(['uuid', 'booking_id'])
+@Index(['uuid', 'booking'])
 export class Event extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
