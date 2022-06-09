@@ -9,8 +9,10 @@ import {
   Generated,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Event } from 'src/events/event.entity';
 
 @Entity()
 export class Booking extends BaseEntity {
@@ -44,6 +46,9 @@ export class Booking extends BaseEntity {
   })
   @JoinColumn({ name: 'plan_id' })
   plan: Plan;
+
+  @OneToMany(() => Event, (event) => event.booking)
+  events: Event[];
 
   @Column({ type: 'int', nullable: false })
   quantity: number;
