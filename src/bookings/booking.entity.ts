@@ -13,6 +13,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Event } from 'src/events/event.entity';
+import { Schedule } from 'src/schedules/schedule.entity';
 
 @Entity()
 export class Booking extends BaseEntity {
@@ -49,6 +50,9 @@ export class Booking extends BaseEntity {
 
   @OneToMany(() => Event, (event) => event.booking)
   events: Event[];
+
+  @OneToMany(() => Schedule, (schedule) => schedule.booking)
+  schedules: Schedule[];
 
   @Column({ type: 'int', nullable: false })
   quantity: number;
