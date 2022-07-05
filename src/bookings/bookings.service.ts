@@ -6,6 +6,7 @@ import { CreateBookingDto } from './dto/create-booking.dto';
 import { FindBookingsQueryDto } from './dto/find-bookings-query.dto';
 import { ReturnBookingDto } from './dto/return-booking.dto';
 import { ReturnFindBookingsDto } from './dto/return-find-bookings.dto';
+import { UpdateBookingDto } from './dto/update-booking.dto';
 
 @Injectable()
 export class BookingsService {
@@ -22,6 +23,21 @@ export class BookingsService {
       user,
       createBookingDto,
     );
+    return new ReturnBookingDto(booking);
+  }
+
+  async update(
+    uuid: string,
+    updateBookingDto: UpdateBookingDto,
+  ): Promise<ReturnBookingDto> {
+    const result = await this.bookingsRepository.update(
+      { uuid },
+      updateBookingDto,
+    );
+    if (result.affected === 0) {
+      throw new Error('Reserva não encontrada');
+    }
+    const booking = await this.bookingsRepository.findOne({ uuid });
     return new ReturnBookingDto(booking);
   }
 

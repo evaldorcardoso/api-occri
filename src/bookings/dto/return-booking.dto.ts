@@ -6,7 +6,7 @@ export class ReturnBookingDto {
   uuid: string;
 
   @ApiProperty()
-  space: string;
+  space?: string;
 
   @ApiProperty()
   user: string;
@@ -25,9 +25,9 @@ export class ReturnBookingDto {
 
   constructor(booking: Booking) {
     this.uuid = booking.uuid;
-    this.space = booking.space.uuid;
-    this.user = booking.user.uuid;
-    this.plan = booking.plan.uuid;
+    booking.space ? (this.space = booking.space.uuid) : null;
+    booking.user ? (this.user = booking.user.uuid) : null;
+    booking.plan ? (this.plan = booking.plan.uuid) : null;
     this.quantity = booking.quantity;
     this.status = booking.status;
     this.created_at = booking.created_at;

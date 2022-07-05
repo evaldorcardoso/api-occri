@@ -7,6 +7,7 @@ import {
   Delete,
   UseGuards,
   Query,
+  Patch,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -26,6 +27,7 @@ import { CreateBookingDto } from './dto/create-booking.dto';
 import { FindBookingsQueryDto } from './dto/find-bookings-query.dto';
 import { ReturnBookingDto } from './dto/return-booking.dto';
 import { ReturnFindBookingsDto } from './dto/return-find-bookings.dto';
+import { UpdateBookingDto } from './dto/update-booking.dto';
 
 @Controller('bookings')
 @ApiTags('Bookings')
@@ -51,6 +53,19 @@ export class BookingsController {
   @ApiOkResponse({ type: ReturnBookingDto })
   async findOne(@Param('uuid') uuid: string): Promise<ReturnBookingDto> {
     return await this.bookingsService.findOne(uuid);
+  }
+
+  @Patch(':uuid')
+  @UseGuards(FirebaseAuthGuard, RolesGuard)
+  @Role(UserRole.ADMIN)
+  @ApiOperation({ summary: 'Update a Booking by UUID' })
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: ReturnBookingDto })
+  async update(
+    @Param('uuid') uuid: string,
+    @Body() updateBookingDto: UpdateBookingDto,
+  ): Promise<ReturnBookingDto> {
+    return await this.bookingsService.update(uuid, updateBookingDto);
   }
 
   @Get()
