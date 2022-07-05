@@ -54,7 +54,10 @@ export class SchedulesService {
   }
 
   async findOne(uuid: string) {
-    const schedule = await this.scheduleRepository.findOne({ uuid });
+    const schedule = await this.scheduleRepository.findOne(
+      { uuid },
+      { relations: ['booking'] },
+    );
     if (!schedule) {
       throw new Error('Schedule not found');
     }
@@ -69,7 +72,10 @@ export class SchedulesService {
     if (result.affected === 0) {
       throw new Error('Agendamento não encontrado');
     }
-    const schedule = await this.scheduleRepository.findOne({ uuid });
+    const schedule = await this.scheduleRepository.findOne(
+      { uuid },
+      { relations: ['booking'] },
+    );
     return new ReturnScheduleDto(schedule);
   }
 

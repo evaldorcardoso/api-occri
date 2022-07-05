@@ -60,6 +60,7 @@ export class EventsController {
   @Patch(':uuid')
   @UseGuards(FirebaseAuthGuard)
   @ApiOperation({ summary: 'Update an Event by uuid' })
+  @ApiBearerAuth()
   @ApiOkResponse({ type: ReturnEventDto })
   async update(
     @Param('uuid') uuid: string,
@@ -71,6 +72,7 @@ export class EventsController {
   @Delete(':uuid')
   @UseGuards(FirebaseAuthGuard)
   @ApiOperation({ summary: 'Delete and Event by uuid' })
+  @ApiBearerAuth()
   @ApiOkResponse()
   async remove(@Param('uuid') uuid: string) {
     return await this.eventsService.remove(uuid);

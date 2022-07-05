@@ -8,6 +8,7 @@
     "entities": [
         "dist/**/*.entity{.ts,.js}"
     ],
+    "timezone": "Z",
     "synchronize": true,
     "seeds": ["dist/**/*.seed{.ts,.js}"],
     "factories": ["dist/**/*.factory{.ts,.js}"]
