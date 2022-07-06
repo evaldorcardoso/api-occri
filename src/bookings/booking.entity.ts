@@ -1,6 +1,8 @@
 import { Plan } from '../plans/plan.entity';
 import { Space } from '../spaces/space.entity';
 import { User } from '../users/user.entity';
+import { Event } from '../events/event.entity';
+import { Schedule } from '../schedules/schedule.entity';
 import {
   BaseEntity,
   Column,
@@ -12,8 +14,6 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Event } from 'src/events/event.entity';
-import { Schedule } from 'src/schedules/schedule.entity';
 
 @Entity()
 export class Booking extends BaseEntity {

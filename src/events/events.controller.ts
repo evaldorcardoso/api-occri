@@ -19,7 +19,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { FirebaseAuthGuard } from 'src/auth/firebase-auth.guard';
+import { FirebaseAuthGuard } from '../auth/firebase-auth.guard';
 import { ReturnEventDto } from './dto/return-event.dto';
 import { FindEventsQueryDto } from './dto/find-spaces.dto';
 import { ReturnFindEventsDto } from './dto/return-find-events.dto';

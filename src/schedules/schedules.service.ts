@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BookingsRepository } from 'src/bookings/bookings.repository';
+import { BookingsRepository } from '../bookings/bookings.repository';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { FindSchedulesQueryDto } from './dto/find-schedules-query.dto';
 import { ReturnFindSchedulesDto } from './dto/return-find-schedules.dto';

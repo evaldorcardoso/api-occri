@@ -8,6 +8,9 @@ import { PlansModule } from './plans/plans.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { EventsModule } from './events/events.module';
 import { SchedulesModule } from './schedules/schedules.module';
+import { AppController } from './app.controller';
+import { FirebaseAuthStrategy } from './auth/firebase-auth.strategy';
+import { UsersRepository } from './users/users.repository';
 
 @Module({
   imports: [
@@ -24,6 +27,9 @@ import { SchedulesModule } from './schedules/schedules.module';
     BookingsModule,
     EventsModule,
     SchedulesModule,
+    TypeOrmModule.forFeature([UsersRepository]),
   ],
+  controllers: [AppController],
+  providers: [FirebaseAuthStrategy],
 })
 export class AppModule {}
