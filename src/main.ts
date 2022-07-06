@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import * as hbs from 'hbs';
 
 async function bootstrap() {
   const config = new DocumentBuilder()
@@ -16,9 +18,16 @@ async function bootstrap() {
       in: 'Header',
     })
     .build();
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+
+  app.useStaticAssets('./public');
+  app.setBaseViewsDir('./views');
+  hbs.registerPartials(__dirname + '/views/partials');
+  app.setViewEngine('hbs');
+  app.set('view options', { layout: 'main' });
+
   await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
