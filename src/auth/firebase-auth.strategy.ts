@@ -38,7 +38,7 @@ export class FirebaseAuthStrategy extends PassportStrategy(
     const uuid = firebaseAuth.uid;
     const firebaseUser = await this.defaultApp.auth().getUser(uuid);
     const user = await this.usersRepository.findOne({ uuid: firebaseUser.uid });
-
+    console.log(user);
     if (!user) {
       const user: User = this.usersRepository.create(User);
       user.uuid = firebaseUser.uid;

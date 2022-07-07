@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
 import { UserRole } from '../user-roles.enum';
 
 export class UpdateUserDto {
@@ -19,4 +19,11 @@ export class UpdateUserDto {
     },
   )
   email: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsEnum(UserRole, {
+    message: 'Informe um papel válido',
+  })
+  role: UserRole;
 }

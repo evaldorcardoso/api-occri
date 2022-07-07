@@ -46,7 +46,7 @@ export class UsersController {
   // }
 
   @Get('me')
-  @Role(UserRole.ADMIN)
+  // @Role(UserRole.ADMIN)
   @ApiOperation({ summary: 'Get the logged user' })
   @ApiOkResponse({ type: ReturnUserDto })
   async findLoggedUser(@GetUser() user: User): Promise<ReturnUserDto> {
@@ -83,8 +83,8 @@ export class UsersController {
     @GetUser() user: User,
     @Param('uuid') uuid: string,
   ): Promise<ReturnUserDto> {
-    const userToUpdate = await this.usersService.findUserByUuid(uuid);
-    if (user.uuid.toString() != uuid && userToUpdate.role != UserRole.ADMIN) {
+    //const userToUpdate = await this.usersService.findUserByUuid(uuid);
+    if (user.uuid.toString() != uuid && user.role != UserRole.ADMIN) {
       throw new ForbiddenException(
         'Você não tem autorização para acessar este recurso',
       );
