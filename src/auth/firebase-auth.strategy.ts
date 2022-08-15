@@ -38,15 +38,14 @@ export class FirebaseAuthStrategy extends PassportStrategy(
     const uuid = firebaseAuth.uid;
     const firebaseUser = await this.defaultApp.auth().getUser(uuid);
     const user = await this.usersRepository.findOne({ uuid: firebaseUser.uid });
-    console.log(user);
     if (!user) {
       const user: User = this.usersRepository.create(User);
       user.uuid = firebaseUser.uid;
       user.email = firebaseUser.email;
-      if (user.email == 'admin@admin.com.br') user.role = UserRole.ADMIN;
+      user.email == 'admin@admin.com.br'
+        ? (user.role = UserRole.ADMIN)
+        : (user.role = UserRole.USER);
       user.name = firebaseUser.displayName || firebaseUser.email;
-      user.picture = firebaseUser.photoURL;
-      user.email_verified = firebaseUser.emailVerified;
 
       try {
         await user.save();
@@ -55,12 +54,8 @@ export class FirebaseAuthStrategy extends PassportStrategy(
         console.log(error);
       }
     }
-
+    console.log(firebaseUser);
     user.email = firebaseUser.email ? firebaseUser.email : user.email;
-    user.picture = firebaseUser.photoURL ? firebaseUser.photoURL : user.picture;
-    user.email_verified = firebaseUser.emailVerified
-      ? firebaseUser.emailVerified
-      : user.email_verified;
 
     try {
       await user.save();
