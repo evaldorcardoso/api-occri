@@ -36,6 +36,7 @@ export class Plan extends BaseEntity {
   @ManyToOne(() => Space, (space) => space.plans, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
+    nullable: false,
   })
   @JoinColumn({ name: 'space_id' })
   space: Space;

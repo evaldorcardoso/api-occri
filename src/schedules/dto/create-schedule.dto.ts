@@ -6,11 +6,11 @@ export class CreateScheduleDto {
   @IsNotEmpty({
     message: 'Informe a data de início do agendamento',
   })
-  start_time: string;
+  start_time: Date;
 
   @ApiProperty()
   @IsNotEmpty({
     message: 'Informe a data de término do agendamento',
   })
-  end_time: string;
+  end_time: Date;
 }

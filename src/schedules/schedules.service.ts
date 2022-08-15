@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/users/user.entity';
 import { BookingsRepository } from '../bookings/bookings.repository';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { FindSchedulesQueryDto } from './dto/find-schedules-query.dto';
@@ -17,17 +18,23 @@ export class SchedulesService {
     private bookingRepository: BookingsRepository,
   ) {}
 
-  async create(booking_uuid: string, createScheduleDto: CreateScheduleDto) {
-    const schedule = this.scheduleRepository.create(createScheduleDto);
-
+  async create(
+    booking_uuid: string,
+    user: User,
+    createScheduleDto: CreateScheduleDto,
+  ) {
     const booking = await this.bookingRepository.findOne({
       uuid: booking_uuid,
     });
     if (!booking) {
       throw new Error('Reserva não encontrada');
     }
-    schedule.booking = booking;
-    await this.scheduleRepository.save(schedule);
+    const schedule = await this.scheduleRepository.createSchedule(
+      user,
+      booking,
+      createScheduleDto,
+    );
+
     return new ReturnScheduleDto(schedule);
   }
 

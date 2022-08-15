@@ -9,13 +9,19 @@ import {
   CreateDateColumn,
   Entity,
   Generated,
+  Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
+  UpdateDateColumn,
 } from 'typeorm';
+import { BOOKING_STATUS } from './BookingStatus';
 
 @Entity()
+@Unique(['id', 'uuid'])
+// @Index(['id', 'uuid'])
 export class Booking extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
@@ -35,7 +41,7 @@ export class Booking extends BaseEntity {
   @ManyToOne(() => User, (user) => user.bookings, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
-    nullable: false,
+    nullable: true,
   })
   @JoinColumn({ name: 'user_id' })
   user: User;
@@ -54,12 +60,26 @@ export class Booking extends BaseEntity {
   @OneToMany(() => Schedule, (schedule) => schedule.booking)
   schedules: Schedule[];
 
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'int', nullable: false, default: 1 })
   quantity: number;
 
-  @Column({ type: 'varchar', length: 50, nullable: false, default: 'created' })
+  @Column({ type: 'varchar', length: 14, nullable: false })
+  cpf: string;
+
+  @Column({ type: 'varchar', length: 100, nullable: false })
+  name: string;
+
+  @Column({
+    type: 'varchar',
+    length: 20,
+    nullable: false,
+    default: BOOKING_STATUS.CREATED,
+  })
   status: string;
 
   @CreateDateColumn()
   created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }

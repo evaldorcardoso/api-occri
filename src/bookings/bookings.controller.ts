@@ -8,6 +8,7 @@ import {
   UseGuards,
   Query,
   Patch,
+  ValidationPipe,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -31,13 +32,13 @@ import { UpdateBookingDto } from './dto/update-booking.dto';
 
 @Controller('bookings')
 @ApiTags('Bookings')
-@ApiBearerAuth()
 export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
   @Get('me')
   @UseGuards(FirebaseAuthGuard, RolesGuard)
   @ApiOperation({ summary: 'Find all Bookings of the logged user' })
+  @ApiBearerAuth()
   @ApiOkResponse({ type: ReturnFindBookingsDto })
   async findMyBookings(
     @Query() query: FindBookingsQueryDto,
@@ -50,6 +51,7 @@ export class BookingsController {
   @Get(':uuid')
   @UseGuards(FirebaseAuthGuard)
   @ApiOperation({ summary: 'Find a Booking by UUID' })
+  @ApiBearerAuth()
   @ApiOkResponse({ type: ReturnBookingDto })
   async findOne(@Param('uuid') uuid: string): Promise<ReturnBookingDto> {
     return await this.bookingsService.findOne(uuid);
@@ -72,6 +74,7 @@ export class BookingsController {
   @UseGuards(FirebaseAuthGuard, RolesGuard)
   @Role(UserRole.ADMIN)
   @ApiOperation({ summary: 'Find all Bookings by filter query' })
+  @ApiBearerAuth()
   @ApiOkResponse({ type: ReturnFindBookingsDto })
   async findAll(
     @Query() query: FindBookingsQueryDto,
@@ -82,6 +85,7 @@ export class BookingsController {
   @Post()
   @UseGuards(FirebaseAuthGuard)
   @ApiOperation({ summary: 'Register a new Booking' })
+  @ApiBearerAuth()
   @ApiCreatedResponse({ type: ReturnBookingDto })
   async create(
     @Body() createBookingDto: CreateBookingDto,
@@ -90,10 +94,20 @@ export class BookingsController {
     return await this.bookingsService.create(user, createBookingDto);
   }
 
+  @Post('/p')
+  @ApiOperation({ summary: 'Register a new Booking' })
+  @ApiCreatedResponse({ type: ReturnBookingDto })
+  async createPublic(
+    @Body(ValidationPipe) createBookingDto: CreateBookingDto,
+  ): Promise<ReturnBookingDto> {
+    return await this.bookingsService.create(null, createBookingDto);
+  }
+
   @Delete(':uuid')
   @UseGuards(FirebaseAuthGuard, RolesGuard)
   @Role(UserRole.ADMIN)
   @ApiOperation({ summary: 'Delete a Booking' })
+  @ApiBearerAuth()
   @ApiOkResponse()
   async remove(@Param('uuid') uuid: string) {
     return await this.bookingsService.remove(uuid);

@@ -18,6 +18,12 @@ export class ReturnBookingDto {
   quantity: number;
 
   @ApiProperty()
+  cpf: string;
+
+  @ApiProperty()
+  name: string;
+
+  @ApiProperty()
   status: string;
 
   @ApiProperty()
@@ -29,6 +35,8 @@ export class ReturnBookingDto {
     booking.user ? (this.user = booking.user.uuid) : null;
     booking.plan ? (this.plan = booking.plan.uuid) : null;
     this.quantity = booking.quantity;
+    this.cpf = booking.cpf;
+    this.name = booking.name;
     this.status = booking.status;
     this.created_at = booking.created_at;
   }
