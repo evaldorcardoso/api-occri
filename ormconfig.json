@@ -1,9 +1,13 @@
 {
     "entities": [
-        "dist/**/*.entity{.ts,.js}"
+        "dist/**/*.entity{.ts,.js}",
+        "src/**/*.entity{.ts,.js}"
     ],
     "timezone": "Z",
     "synchronize": true,
-    "seeds": ["dist/**/*.seed{.ts,.js}"],
+    "seeds": [
+        "dist/**/*.seed{.ts,.js}",
+        "src/**/*.seed{.ts,.js}"
+    ],
     "factories": ["dist/**/*.factory{.ts,.js}"]
 }
