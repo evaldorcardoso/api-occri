@@ -26,12 +26,6 @@ export class User extends BaseEntity {
   @Column({ nullable: false, type: 'varchar', length: 100 })
   name: string;
 
-  @Column({ nullable: true, type: 'varchar' })
-  picture: string;
-
-  @Column({ nullable: false })
-  email_verified: boolean;
-
   @Column({ type: 'simple-enum', enum: UserRole, default: UserRole.USER })
   role: UserRole;
 

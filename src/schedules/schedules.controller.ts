@@ -32,19 +32,19 @@ import { UserRole } from 'src/users/user-roles.enum';
 export class SchedulesController {
   constructor(private readonly schedulesService: SchedulesService) {}
 
-  @Post('bookings/:booking')
-  @UseGuards(FirebaseAuthGuard, RolesGuard)
-  @Role(UserRole.ADMIN)
-  @ApiOperation({ summary: 'Create a schedule' })
-  @ApiBearerAuth()
-  @ApiParam({ name: 'booking', type: String, required: false })
-  @ApiOkResponse({ type: ReturnScheduleDto })
-  async create(
-    @Param('booking') booking: string,
-    @Body() createScheduleDto: CreateScheduleDto,
-  ): Promise<ReturnScheduleDto> {
-    return await this.schedulesService.create(booking, createScheduleDto);
-  }
+  // @Post('bookings/:booking')
+  // @UseGuards(FirebaseAuthGuard, RolesGuard)
+  // @Role(UserRole.ADMIN)
+  // @ApiOperation({ summary: 'Create a schedule' })
+  // @ApiBearerAuth()
+  // @ApiParam({ name: 'booking', type: String, required: false })
+  // @ApiOkResponse({ type: ReturnScheduleDto })
+  // async create(
+  //   @Param('booking') booking: string,
+  //   @Body() createScheduleDto: CreateScheduleDto,
+  // ): Promise<ReturnScheduleDto> {
+  //   return await this.schedulesService.create(booking, createScheduleDto);
+  // }
 
   @Get()
   @ApiOperation({ summary: 'Find all Schedules by filter query' })

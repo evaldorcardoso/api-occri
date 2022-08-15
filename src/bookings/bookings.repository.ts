@@ -25,10 +25,14 @@ export class BookingsRepository extends Repository<Booking> {
     }
 
     const booking = this.create();
-    booking.user = user;
+    if (user) {
+      booking.user = user;
+      booking.status = 'success';
+    }
     booking.space = space;
     booking.plan = plan;
-    booking.quantity = createBookingDto.quantity;
+    booking.cpf = createBookingDto.cpf;
+    booking.name = createBookingDto.name;
 
     try {
       await booking.save();
@@ -75,7 +79,7 @@ export class BookingsRepository extends Repository<Booking> {
         { user_id: user_id.id },
       );
     } else {
-      query.innerJoinAndSelect('booking.user', 'user');
+      query.leftJoinAndSelect('booking.user', 'user');
     }
 
     if (plan) {
@@ -112,6 +116,8 @@ export class BookingsRepository extends Repository<Booking> {
       'booking.status',
       'booking.created_at',
       'booking.quantity',
+      'booking.cpf',
+      'booking.name',
       'space.uuid',
       'user.uuid',
       'plan.uuid',

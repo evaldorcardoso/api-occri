@@ -7,7 +7,7 @@ import { FirebaseAuthStrategy } from 'src/auth/firebase-auth.strategy';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UsersRepository])],
-  providers: [UsersService],
+  providers: [UsersService, FirebaseAuthStrategy],
   controllers: [UsersController],
 })
 export class UsersModule {}

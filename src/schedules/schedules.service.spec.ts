@@ -17,7 +17,7 @@ describe('SchedulesService', () => {
           useValue: {
             createSchedule: jest.fn(),
             findOne: jest.fn(),
-            findScheduels: jest.fn(),
+            findSchedules: jest.fn(),
           },
         },
         {

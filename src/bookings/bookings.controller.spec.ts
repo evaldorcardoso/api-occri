@@ -1,4 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { ScheduleRepository } from '../schedules/schedule.repository';
+import { SchedulesService } from '../schedules/schedules.service';
 import { BookingsController } from './bookings.controller';
 import { BookingsRepository } from './bookings.repository';
 import { BookingsService } from './bookings.service';
@@ -13,7 +15,28 @@ describe('BookingsController', () => {
         BookingsService,
         {
           provide: BookingsRepository,
-          useValue: {},
+          useValue: {
+            createBooking: jest.fn(),
+            findOne: jest.fn(),
+            findBookings: jest.fn(),
+          },
+        },
+        SchedulesService,
+        {
+          provide: BookingsRepository,
+          useValue: {
+            createBooking: jest.fn(),
+            findOne: jest.fn(),
+            findBookings: jest.fn(),
+          },
+        },
+        {
+          provide: ScheduleRepository,
+          useValue: {
+            createSchedule: jest.fn(),
+            findOne: jest.fn(),
+            findSchedules: jest.fn(),
+          },
         },
       ],
     }).compile();

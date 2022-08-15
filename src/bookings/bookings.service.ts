@@ -1,7 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { SchedulesService } from '../schedules/schedules.service';
+import { SCHEDULE_STATUS } from '../schedules/ScheduleStatus';
 import { User } from '../users/user.entity';
 import { BookingsRepository } from './bookings.repository';
+import { BOOKING_STATUS } from './BookingStatus';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { FindBookingsQueryDto } from './dto/find-bookings-query.dto';
 import { ReturnBookingDto } from './dto/return-booking.dto';
@@ -13,16 +21,28 @@ export class BookingsService {
   constructor(
     @InjectRepository(BookingsRepository)
     private bookingsRepository: BookingsRepository,
+    @Inject(SchedulesService)
+    private schedulesService: SchedulesService,
   ) {}
 
   async create(
     user: User,
     createBookingDto: CreateBookingDto,
   ): Promise<ReturnBookingDto> {
+    if (!this.isValidCPF(createBookingDto.cpf)) {
+      throw new BadRequestException('CPF inválido');
+    }
+
     const booking = await this.bookingsRepository.createBooking(
       user,
       createBookingDto,
     );
+
+    await this.schedulesService.create(booking.uuid, user, {
+      start_time: createBookingDto.start_time,
+      end_time: createBookingDto.end_time,
+    });
+
     return new ReturnBookingDto(booking);
   }
 
@@ -34,10 +54,25 @@ export class BookingsService {
       { uuid },
       updateBookingDto,
     );
+
     if (result.affected === 0) {
       throw new Error('Reserva não encontrada');
     }
-    const booking = await this.bookingsRepository.findOne({ uuid });
+
+    const booking = await this.bookingsRepository.findOne(
+      { uuid },
+      { relations: ['schedule'] },
+    );
+
+    if (
+      booking.status === BOOKING_STATUS.COMPLETED &&
+      booking.schedules[0].status != SCHEDULE_STATUS.COMPLETED
+    ) {
+      await this.schedulesService.update(booking.schedules[0].uuid, {
+        status: SCHEDULE_STATUS.COMPLETED,
+      });
+    }
+
     return new ReturnBookingDto(booking);
   }
 
@@ -67,5 +102,20 @@ export class BookingsService {
     if (result.affected === 0) {
       throw new NotFoundException('Reserva não encontrada');
     }
+  }
+
+  private isValidCPF(cpf) {
+    if (typeof cpf !== 'string') return false;
+    cpf = cpf.replace(/[^\d]+/g, '');
+    if (cpf.length !== 11 || !!cpf.match(/(\d)\1{10}/)) return false;
+    cpf = cpf.split('').map((el) => +el);
+    const rest = (count) =>
+      ((cpf
+        .slice(0, count - 12)
+        .reduce((soma, el, index) => soma + el * (count - index), 0) *
+        10) %
+        11) %
+      10;
+    return rest(10) === cpf[9] && rest(11) === cpf[10];
   }
 }

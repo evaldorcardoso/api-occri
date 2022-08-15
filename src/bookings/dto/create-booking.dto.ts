@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateBookingDto {
   @ApiProperty()
@@ -16,15 +16,25 @@ export class CreateBookingDto {
 
   @ApiProperty()
   @IsNotEmpty({
-    message: 'Informe a Quantidade',
+    message: 'Informe o CPF do Usuário',
   })
-  @IsNumber(
-    {
-      allowInfinity: false,
-    },
-    {
-      message: 'Informe um valor válido',
-    },
-  )
-  quantity: number;
+  cpf: string;
+
+  @ApiProperty()
+  @IsNotEmpty({
+    message: 'Informe o Nome do Usuário',
+  })
+  name: string;
+
+  @ApiProperty()
+  @IsDateString({
+    message: 'Informe a Data de Início',
+  })
+  start_time: Date;
+
+  @ApiProperty()
+  @IsDateString({
+    message: 'Informe a Data de Fim',
+  })
+  end_time: Date;
 }

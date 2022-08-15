@@ -1,9 +1,32 @@
+import { Booking } from '../bookings/booking.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { FindSchedulesQueryDto } from './dto/find-schedules-query.dto';
 import { Schedule } from './schedule.entity';
+import { CreateScheduleDto } from './dto/create-schedule.dto';
+import { User } from '../users/user.entity';
 
 @EntityRepository(Schedule)
 export class ScheduleRepository extends Repository<Schedule> {
+  async createSchedule(
+    user: User,
+    booking: Booking,
+    createScheduleDto: CreateScheduleDto,
+  ): Promise<Schedule> {
+    const schedule = this.create();
+    if (user) {
+      schedule.is_active = true;
+    }
+    schedule.start_time = createScheduleDto.start_time;
+    schedule.end_time = createScheduleDto.end_time;
+
+    try {
+      await schedule.save();
+      return schedule;
+    } catch (error) {
+      throw new Error(`Não foi possível criar o Agendamento: ${error.message}`);
+    }
+  }
+
   async findSchedules(
     booking_id: number,
     queryDto: FindSchedulesQueryDto,
