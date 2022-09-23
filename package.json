@@ -8,8 +8,8 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "docker:build": "docker build . -t api-occri",
-    "docker:run": "docker run -it -p 8000:3000 api-occri",
+    "docker:build": "docker compose up --build",
+    "docker:run": "docker compose up -d",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
