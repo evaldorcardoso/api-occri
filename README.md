@@ -30,13 +30,13 @@ $ yarn
 1 - Copy example.env to .env file and set up the values
 
 ```bash
-# bring up database (Docker https://www.docker.com/ and Docker-Compose https://docs.docker.com/compose/ are necessary), it will bring the containers with mysql database and phpmyadmin, that can be acessed via browser at http://localhost:8080
-$ docker-compose up
+# bring up database (Docker https://www.docker.com/ and Docker-Compose https://docs.docker.com/compose/ are necessary), it will bring the containers with mysql database and phpmyadmin and the api, that can be acessed via browser at http://localhost:8080
+$ yarn docker:run
 
-# development
+# for local development
 $ yarn start
 
-# watch mode
+# for local development watch mode
 $ yarn start:dev
 
 # production mode
@@ -61,4 +61,4 @@ $ yarn test:cov
 
 ## ✒️ Stay in touch
 
-* **Developer** - [Evaldo R Cardoso](https:evaldorc.com.br)
+* **Developer** - [Evaldo R Cardoso](https://evaldorc.com.br)
