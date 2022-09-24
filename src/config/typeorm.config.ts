@@ -9,8 +9,15 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: process.env.DB_DATABASE || 'database-occri',
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
   autoLoadEntities: true,
-  synchronize: false
+  synchronize: false,
+  socketPath: `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`,
+}
+
+if(process.env.NODE_ENV === 'production') {
+  console.log('Running from cloud. Connecting to DB through GCP socket. ' + process.env.INSTANCE_CONNECTION_NAME);
 }
 
 console.log(`env: ${process.env.NODE_ENV || `DEFAULT`}`);
-console.log(`env: ${typeOrmConfig.database}`);
+console.log(`database: ${typeOrmConfig.database}`);
+console.log(`host: ${typeOrmConfig.host}`);
+console.log(`socketPath: ${typeOrmConfig.socketPath}`);
