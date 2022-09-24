@@ -1,2 +1,6 @@
 db:
   database: 'database-occri'
+  host: '35.199.120.28'
+  username: 'test'
+  password: 'LMcMQu/iJOB?Fy70'
+  synchronize: false
