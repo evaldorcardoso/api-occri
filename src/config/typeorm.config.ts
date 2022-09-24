@@ -10,7 +10,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
   autoLoadEntities: true,
   synchronize: false,
-  socketPath: `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`,
+  socketPath: '/cloudsql/api-occri:southamerica-east1:database-occri',
 }
 
 if(process.env.NODE_ENV === 'production') {
