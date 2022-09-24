@@ -6,6 +6,7 @@ FROM node:18-alpine As development
 WORKDIR /workspace
 
 COPY package.json yarn.lock /workspace/
+COPY /config/production.yml /workspace/config/production.yml
 
 RUN yarn
 
