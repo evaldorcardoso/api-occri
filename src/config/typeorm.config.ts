@@ -21,3 +21,4 @@ console.log(`env: ${process.env.NODE_ENV || `DEFAULT`}`);
 console.log(`database: ${typeOrmConfig.database}`);
 console.log(`host: ${typeOrmConfig.host}`);
 console.log(`socketPath: ${typeOrmConfig.socketPath}`);
+console.log('socketPath: ' + process.env.INSTANCE_UNIX_SOCKET);
