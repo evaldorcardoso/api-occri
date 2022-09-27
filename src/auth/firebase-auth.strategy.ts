@@ -6,6 +6,7 @@ import { UsersRepository } from 'src/users/users.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/user.entity';
 import { UserRole } from 'src/users/user-roles.enum';
+require('dotenv').config({ silent: true });
 
 @Injectable()
 export class FirebaseAuthStrategy extends PassportStrategy(
@@ -21,7 +22,12 @@ export class FirebaseAuthStrategy extends PassportStrategy(
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     });
     this.defaultApp = firebase.initializeApp({
-      credential: firebase.credential.cert('src/auth/api_occri_firebase.json'),
+      //credential: firebase.credential.cert('src/auth/api_occri_firebase.json'),
+      credential: firebase.credential.cert({        
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+        privateKey: process.env.FIREBASE_PRIVATE_KEY,
+      }),
     });
   }
   async validate(token: string) {

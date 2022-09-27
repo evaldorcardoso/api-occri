@@ -28,6 +28,6 @@ async function bootstrap() {
   app.setViewEngine('hbs');
   app.set('view options', { layout: 'main' });
 
-  await app.listen(process.env.PORT || 8080);
+  await app.listen(process.env.PORT || 80);
 }
 bootstrap();
