@@ -1,4 +1,4 @@
-name: Deploy to ECR
+name: Deploy to AWS
 
 on:
  
@@ -39,6 +39,12 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+    - name: Delete old images
+      uses: LeiaInc/devops-delete-old-aws-ecr-images@v1
+      with:
+        repo-name: api-occri
+        qtd-images: 1
 
     - name: Download task definition
       run: |
