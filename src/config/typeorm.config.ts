@@ -16,6 +16,6 @@ if(process.env.NODE_ENV === 'production') {
   console.log('Running from cloud. Connecting to DB through GCP socket. ' + process.env.INSTANCE_CONNECTION_NAME);
 }
 
-console.log(`env: ${process.env.NODE_ENV || `DEFAULT`}`);
-console.log(`database: ${typeOrmConfig.database}`);
-console.log(`host: ${typeOrmConfig.host}`);
+console.log(`running env: ${process.env.NODE_ENV || `DEFAULT`}`);
+console.log(`running database: ${typeOrmConfig.database}`);
+console.log(`running host: ${typeOrmConfig.host}`);
