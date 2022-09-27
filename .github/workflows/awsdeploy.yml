@@ -34,7 +34,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: api-occri
-        IMAGE_TAG: api-occri
+        IMAGE_TAG: ${{ github.sha }}
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -45,6 +45,6 @@ jobs:
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: api-occri-task-definition.json
-        container-name: web
+        container-name: api-occri
         image: ${{ steps.build-image.outputs.image }}
         environment-variables: "TYPEORM_CONNECTION=mysql"
