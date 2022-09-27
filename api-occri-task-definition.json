@@ -27,6 +27,10 @@
       "cpu": 0,
       "environment": [
         {
+          "name": "TYPEORM_DATABASE",
+          "value": "database-occri"
+        },
+        {
           "TYPEORM_CONNECTION": "mysql",
           "TYPEORM_HOST": "database-occri.cgwnh0w7apik.us-east-1.rds.amazonaws.com",
           "TYPEORM_USERNAME": "admin",

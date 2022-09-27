@@ -2,15 +2,14 @@ import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
   type: 'mysql',
-  host: process.env.DB_HOST || '35.199.120.28',
-  port: parseInt(process.env.DB_PORT)  || 3306,
-  username: process.env.DB_USERNAME || 'teste',
-  password: process.env.DB_PASSWORD || 'LMcMQu/iJOB?Fy70',
-  database: process.env.DB_DATABASE || 'database-occri',
+  host: process.env.TYPEORM_HOST,
+  port: parseInt(process.env.TYPEORM_PORT),
+  username: process.env.TYPEORM_USERNAME,
+  password: process.env.TYPEORM_PASSWORD,
+  database: process.env.TYPEORM_DATABASE,
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
   autoLoadEntities: true,
-  synchronize: false,
-  socketPath: '/cloudsql/api-occri:southamerica-east1:database-occri',
+  synchronize: false
 }
 
 if(process.env.NODE_ENV === 'production') {
@@ -20,5 +19,3 @@ if(process.env.NODE_ENV === 'production') {
 console.log(`env: ${process.env.NODE_ENV || `DEFAULT`}`);
 console.log(`database: ${typeOrmConfig.database}`);
 console.log(`host: ${typeOrmConfig.host}`);
-console.log(`socketPath: ${typeOrmConfig.socketPath}`);
-console.log('socketPath: ' + process.env.INSTANCE_UNIX_SOCKET);
