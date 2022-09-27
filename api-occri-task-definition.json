@@ -25,7 +25,16 @@
       "command": null,
       "linuxParameters": null,
       "cpu": 0,
-      "environment": [],
+      "environment": [
+        {
+          "TYPEORM_CONNECTION": "mysql",
+          "TYPEORM_HOST": "database-occri.cgwnh0w7apik.us-east-1.rds.amazonaws.com",
+          "TYPEORM_USERNAME": "admin",
+          "TYPEORM_PASSWORD": "NBgkqhkiG9",
+          "TYPEORM_DATABASE": "database-occri",
+          "TYPEORM_PORT": 3306
+        }
+      ],
       "resourceRequirements": null,
       "ulimits": null,
       "dnsServers": null,
