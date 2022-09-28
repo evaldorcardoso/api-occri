@@ -9,11 +9,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: process.env.TYPEORM_DATABASE,
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
   autoLoadEntities: true,
-  synchronize: false
-}
-
-if(process.env.NODE_ENV === 'production') {
-  console.log('Running from cloud. Connecting to DB through GCP socket. ' + process.env.INSTANCE_CONNECTION_NAME);
+  synchronize: true
 }
 
 console.log(`running env: ${process.env.NODE_ENV || `DEFAULT`}`);
