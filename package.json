@@ -10,6 +10,7 @@
     "build": "nest build",
     "docker:build": "docker compose up --build",
     "docker:run": "docker compose up -d",
+    "docker:stop": "docker compose down",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
