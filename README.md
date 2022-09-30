@@ -21,7 +21,7 @@ API to manage OCCRI System, this is the back-end part of the project OCCRI Syste
 ##  Installation
 
 ```bash
-# Make sure you've yarn installed (https://yarnpkg.com/)
+# First of all, make sure you've yarn installed (https://yarnpkg.com/), then run:
 $ yarn
 ```
 
@@ -30,21 +30,28 @@ $ yarn
 1 - Copy example.env to .env file and set up the values
 
 ```bash
-# bring up database (Docker https://www.docker.com/ and Docker-Compose https://docs.docker.com/compose/ are necessary), it will bring the containers with mysql database and phpmyadmin and the api, that can be acessed via browser at http://localhost:8080
+# bring up database (Docker https://www.docker.com/ and Docker-Compose https://docs.docker.com/compose/ are necessary), it will bring the containers with mysql database and phpmyadmin, that can be acessed via browser at http://localhost:8080
+
+# start and bring up the database and manager containers
 $ yarn docker:run
 
-# for local development
+# start the api for local development
 $ yarn start
 
-# for local development watch mode
+# start the api for local development watch mode
 $ yarn start:dev
 
-# production mode
+# start the api for production mode
 $ yarn start:prod
 
 # seed database (create Admin User)
 $ yarn seed:run
+
+# stop the containers
+$ yarn docker:stop
 ```
+
+After that, the api can be acessed through this url: http://localhost:3000
 
 ## Test
 
@@ -58,6 +65,11 @@ $ yarn test:e2e
 # test coverage
 $ yarn test:cov
 ```
+
+## 🔐 Authentication and login
+
+Check our documentation about how to manage the authentication and login of users: [Authentication Flow](./docs/Authorization.md).
+
 
 ## ✒️ Stay in touch
 

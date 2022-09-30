@@ -20,7 +20,7 @@ async function bootstrap() {
     .build();
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('/', app, document);
 
   app.useStaticAssets('./public');
   app.setBaseViewsDir('./views');

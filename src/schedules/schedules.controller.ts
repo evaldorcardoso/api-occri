@@ -16,7 +16,6 @@ import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
-  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import { ReturnScheduleDto } from './dto/return-schedule.dto';

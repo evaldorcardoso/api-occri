@@ -26,7 +26,7 @@ export class EventsService {
   ): Promise<ReturnFindEventsDto> {
     const booking = await this.eventsRepository.findOne({ uuid: booking_uuid });
     if (!booking) {
-      throw new NotFoundException('Reserva não encontrada');
+      throw new NotFoundException('Reserva informada não encontrada');
     }
 
     const found = await this.eventsRepository.findEvents(booking.id, queryDto);

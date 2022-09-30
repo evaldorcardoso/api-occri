@@ -1,19 +1,19 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { BaseQueryParametersDto } from '../../shared/dto/base-query-parameters.dto';
 
 export class FindBookingsQueryDto extends BaseQueryParametersDto {
-  @ApiProperty()
+  @ApiPropertyOptional()
   space: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   user: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   plan: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   status: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   created_at: Date;
 }

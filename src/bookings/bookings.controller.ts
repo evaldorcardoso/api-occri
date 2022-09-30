@@ -95,7 +95,7 @@ export class BookingsController {
   }
 
   @Post('/p')
-  @ApiOperation({ summary: 'Register a new Booking' })
+  @ApiOperation({ summary: 'Register a new Booking (public)' })
   @ApiCreatedResponse({ type: ReturnBookingDto })
   async createPublic(
     @Body(ValidationPipe) createBookingDto: CreateBookingDto,

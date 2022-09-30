@@ -1,15 +1,15 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 import { BaseQueryParametersDto } from '../../shared/dto/base-query-parameters.dto';
 import { UserRole } from '../user-roles.enum';
 
 export class FindUsersQueryDto extends BaseQueryParametersDto {
-  @ApiProperty()
+  @ApiPropertyOptional()
   name: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   email: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   role: UserRole;
 
   is_active = true;
