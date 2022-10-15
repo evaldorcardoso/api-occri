@@ -73,6 +73,7 @@ $ yarn test:cov
 Check our documentation about how to manage the authentication and login of users: [Authentication Flow](./docs/Authorization.md).
 
 
-## ✒️ Stay in touch
+## ✒️ Devs
 
-* **Developer** - [Evaldo R Cardoso](https://evaldorc.com.br)
+* **Backend** - [Evaldo R Cardoso](https://evaldorc.com.br)
+* **Frontend** - [Jean Lima](https://jean.dev.com)
