@@ -9,8 +9,7 @@
 
 ## Description
 
-API to manage OCCRI System, this is the back-end part of the project OCCRI System.     
-
+✔ Backend: API to manage OCCRI System, this is the back-end part of the project OCCRI System.     
 ✔ Frontend: [Occri](https://github.com/JeanLiima/occri)
 
 ## 🛠️ Technologies:
