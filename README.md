@@ -12,7 +12,7 @@
 ✔ Backend: API to manage OCCRI System, this is the back-end part of the project OCCRI System.     
 ✔ Frontend: [Occri](https://github.com/JeanLiima/occri)
 
-## 🛠️ Technologies:
+🛠️ Technologies:
 
 * [NestJS](https://nestjs.com/) - A progressive Node.js framework
 * [MySQL](https://www.mysql.com/) - Database
@@ -26,7 +26,7 @@
 $ yarn
 ```
 
-## 🚀Running the app
+## Running the app
 
 1 - Copy example.env to .env file and set up the values
 
@@ -67,12 +67,12 @@ $ yarn test:e2e
 $ yarn test:cov
 ```
 
-## 🔐 Authentication and login
+## Authentication and login
 
 Check our documentation about how to manage the authentication and login of users: [Authentication Flow](./docs/Authorization.md).
 
 
-## ✒️ Devs
+## Devs
 
 * **Backend** - [Evaldo R Cardoso](https://evaldorc.com.br)
 * **Frontend** - [Jean Lima](https://jean.dev.com)
