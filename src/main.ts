@@ -27,6 +27,7 @@ async function bootstrap() {
   hbs.registerPartials(__dirname + '/views/partials');
   app.setViewEngine('hbs');
   app.set('view options', { layout: 'main' });
+  app.enableCors();
 
   await app.listen(process.env.PORT || 80);
 }
