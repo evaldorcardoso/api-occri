@@ -59,7 +59,7 @@ export class FirebaseAuthStrategy extends PassportStrategy(
         console.log(error);
       }
     }
-    console.log(firebaseUser);
+    
     user.email = firebaseUser.email ? firebaseUser.email : user.email;
 
     try {
