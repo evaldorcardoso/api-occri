@@ -14,4 +14,19 @@ export class CreateSpaceDto {
   @ApiProperty()
   @IsOptional()
   description: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  image_url: string
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  image_alt: string
+
+  @ApiProperty({
+    default: 1,
+    required: false
+  })
+  @IsOptional()
+  occupation_max: number
 }

@@ -25,6 +25,9 @@ export class SpacesRepository extends Repository<Space> {
       'space.uuid',
       'space.name',
       'space.description',
+      'space.image_url',
+      'space.image_alt',
+      'space.occupation_max',
       'space.created_at',
     ]);
 
