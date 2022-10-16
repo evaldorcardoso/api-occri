@@ -29,8 +29,6 @@ services:
       MYSQL_ROOT_PASSWORD: ${TYPEORM_PASSWORD}
       MYSQL_DATABASE: ${TYPEORM_DATABASE}
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-    networks:
-      - api_occri_network
   admin:
     container_name: 'phpmyadmin'
     image: phpmyadmin/phpmyadmin:latest
@@ -45,12 +43,5 @@ services:
       PMA_HOST: ${TYPEORM_HOST}
       PMA_PORT: "3306"
       PMA_ARBITRARY: 1
-    networks:
-      - api_occri_network
-
-networks:
-  api_occri_network:
-    driver: bridge
-    name: api_occri_network
 volumes:
   data:
