@@ -13,15 +13,15 @@ export class UpdateSpaceDto {
   @IsOptional()
   description: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsOptional()
   image_url: string
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsOptional()
   image_alt: string
 
-  @ApiProperty()
+  @ApiProperty({ default: 1, required: false })
   @IsOptional()
   @MinLength(1, {
     message: 'O número máximo de ocupantes deve ser no mínimo 1',

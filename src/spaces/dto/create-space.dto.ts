@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, MaxLength, MinLength } from 'class-validator';
 
 export class CreateSpaceDto {
   @ApiProperty()
@@ -23,10 +23,10 @@ export class CreateSpaceDto {
   @IsOptional()
   image_alt: string
 
-  @ApiProperty({
-    default: 1,
-    required: false
-  })
+  @ApiProperty({ default: 1, required: false })
   @IsOptional()
+  @MinLength(1, {
+    message: 'O número máximo de ocupantes deve ser no mínimo 1',
+  })
   occupation_max: number
 }
