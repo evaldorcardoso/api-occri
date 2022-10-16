@@ -48,6 +48,7 @@ describe('SpacesService', () => {
     space.uuid = faker.unique.toString();
     space.name = createSpaceDto.name;
     space.description = createSpaceDto.description;
+    space.occupation_max = 1
     const resolvedSpace = new ReturnSpaceDto(space);
 
     jest.spyOn(repository, 'create').mockImplementationOnce(() => space);
@@ -65,6 +66,7 @@ describe('SpacesService', () => {
     space.uuid = faker.unique.toString();
     space.name = faker.name.findName();
     space.description = faker.lorem.sentence();
+    space.occupation_max = 1
     const resolvedSpace = new ReturnSpaceDto(space);
 
     jest.spyOn(repository, 'findOne').mockImplementationOnce(() => {
@@ -80,6 +82,7 @@ describe('SpacesService', () => {
     const space = new Space();
     space.uuid = faker.unique.toString();
     space.name = faker.name.findName();
+    space.occupation_max = 1
 
     const resolvedSpaces = new ReturnFindSpacesDto();
     resolvedSpaces.spaces = [space];
@@ -102,6 +105,25 @@ describe('SpacesService', () => {
     space.uuid = faker.unique.toString();
     space.name = faker.name.findName();
     space.description = faker.lorem.sentence();
+    const resolvedSpace = new ReturnSpaceDto(space);
+
+    jest.spyOn(repository, 'update').mockResolvedValue(new UpdateResult());
+    jest.spyOn(repository, 'findOne').mockImplementationOnce(() => {
+      return Promise.resolve(space);
+    });
+
+    const data = await service.update(space.uuid, space);
+
+    expect(data).toEqual(resolvedSpace);
+  });
+
+  it('should be able to update a space, setting image_url and image_alt', async () => {
+    const space = new Space();
+    space.uuid = faker.unique.toString();
+    space.name = faker.name.findName();
+    space.description = faker.lorem.sentence();
+    space.image_url = faker.image.imageUrl();
+    space.image_alt = faker.word.verb();
     const resolvedSpace = new ReturnSpaceDto(space);
 
     jest.spyOn(repository, 'update').mockResolvedValue(new UpdateResult());

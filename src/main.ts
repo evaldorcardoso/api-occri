@@ -8,7 +8,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('API OCCRI')
     .setDescription('API to manage OCCRI System')
-    .setVersion('0.0.1')
+    .setVersion('0.0.2')
     .addBearerAuth({
       description: 'Please enter token in following format: Bearer <JWT>',
       name: 'Authorization',
