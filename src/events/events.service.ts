@@ -24,12 +24,21 @@ export class EventsService {
     booking_uuid: string,
     queryDto: FindEventsQueryDto,
   ): Promise<ReturnFindEventsDto> {
-    const booking = await this.eventsRepository.findOne({ uuid: booking_uuid });
-    if (!booking) {
-      throw new NotFoundException('Reserva informada não encontrada');
+    let booking;
+
+    if (booking_uuid) {
+      booking = await this.eventsRepository.findOne({
+        uuid: booking_uuid,
+      });
+      if (!booking) {
+        throw new NotFoundException('Reserva informada não encontrada');
+      }
     }
 
-    const found = await this.eventsRepository.findEvents(booking.id, queryDto);
+    const found = await this.eventsRepository.findEvents(
+      booking ? booking.id : 0,
+      queryDto,
+    );
 
     return {
       events: found.events.map((event) => new ReturnEventDto(event)),
