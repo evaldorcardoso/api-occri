@@ -23,6 +23,18 @@ export class Event extends BaseEntity {
   @Column({ type: 'varchar', length: 100, nullable: false })
   name: string;
 
+  @Column({ nullable: false, type: 'longtext' })
+  description: string;
+
+  @Column({ nullable: true, type: 'varchar', length: 50 })
+  image_alt: string;
+
+  @Column({ nullable: true, type: 'varchar', length: 255 })
+  image_url: string;
+
+  @Column({ nullable: true, type: 'longtext' })
+  contact_url: string;
+
   @ManyToOne(() => Booking, (booking) => booking.events, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
