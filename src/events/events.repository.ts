@@ -29,7 +29,7 @@ export class EventsRepository extends Repository<Event> {
         { booking_id },
       );
     } else {
-      query.innerJoinAndSelect(
+      query.leftJoinAndSelect(
         'event.booking',
         'booking',
         'booking.id = event.booking_id',
@@ -43,7 +43,7 @@ export class EventsRepository extends Repository<Event> {
       'event.image_alt',
       'event.image_url',
       'event.contact_url',
-      // 'booking.uuid',
+      'booking.uuid',
     ]);
 
     const [events, total] = await query.getManyAndCount();
