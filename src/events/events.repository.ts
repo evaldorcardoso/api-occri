@@ -43,8 +43,7 @@ export class EventsRepository extends Repository<Event> {
       'event.image_alt',
       'event.image_url',
       'event.contact_url',
-      'event.created_at',
-      'booking.uuid',
+      // 'booking.uuid',
     ]);
 
     const [events, total] = await query.getManyAndCount();
