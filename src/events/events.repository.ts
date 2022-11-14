@@ -40,6 +40,9 @@ export class EventsRepository extends Repository<Event> {
       'event.uuid',
       'event.name',
       'event.description',
+      'event.image_alt',
+      'event.image_url',
+      'event.contact_url',
       'event.created_at',
       'booking.uuid',
     ]);
