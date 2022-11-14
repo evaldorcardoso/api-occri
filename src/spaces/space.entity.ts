@@ -29,13 +29,13 @@ export class Space extends BaseEntity {
   description: string;
 
   @Column({ nullable: true, type: 'varchar', length: 255 })
-  image_url: string
+  image_url: string;
 
   @Column({ nullable: true, type: 'varchar', length: 50 })
-  image_alt: string
+  image_alt: string;
 
-  @Column({ nullable: false, type: 'int' , default: 1})
-  occupation_max: number
+  @Column({ nullable: false, type: 'int', default: 1 })
+  occupation_max: number;
 
   @OneToMany(() => Plan, (plan) => plan.space)
   plans: Plan[];

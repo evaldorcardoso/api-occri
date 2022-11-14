@@ -48,7 +48,7 @@ describe('SpacesService', () => {
     space.uuid = faker.unique.toString();
     space.name = createSpaceDto.name;
     space.description = createSpaceDto.description;
-    space.occupation_max = 1
+    space.occupation_max = 1;
     const resolvedSpace = new ReturnSpaceDto(space);
 
     jest.spyOn(repository, 'create').mockImplementationOnce(() => space);
@@ -66,7 +66,7 @@ describe('SpacesService', () => {
     space.uuid = faker.unique.toString();
     space.name = faker.name.findName();
     space.description = faker.lorem.sentence();
-    space.occupation_max = 1
+    space.occupation_max = 1;
     const resolvedSpace = new ReturnSpaceDto(space);
 
     jest.spyOn(repository, 'findOne').mockImplementationOnce(() => {
@@ -82,7 +82,7 @@ describe('SpacesService', () => {
     const space = new Space();
     space.uuid = faker.unique.toString();
     space.name = faker.name.findName();
-    space.occupation_max = 1
+    space.occupation_max = 1;
 
     const resolvedSpaces = new ReturnFindSpacesDto();
     resolvedSpaces.spaces = [space];

@@ -1,4 +1,4 @@
-import { TypeOrmModuleOptions } from "@nestjs/typeorm";
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
   type: 'mysql',
@@ -9,8 +9,8 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: process.env.TYPEORM_DATABASE,
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
   autoLoadEntities: true,
-  synchronize: true
-}
+  synchronize: true,
+};
 
 console.log(`running env: ${process.env.NODE_ENV || `DEFAULT`}`);
 console.log(`running database: ${typeOrmConfig.database}`);
