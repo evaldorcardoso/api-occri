@@ -4,6 +4,7 @@ import { DeleteResult, UpdateResult } from 'typeorm';
 import { CreateSpaceDto } from './dto/create-space.dto';
 import { FindSpacesQueryDto } from './dto/find-spaces-query.dto';
 import { ReturnFindSpacesDto } from './dto/return-find-spaces.dto';
+import { ReturnSpaceWithPlansDto } from './dto/return-space-with-plans.dto';
 import { ReturnSpaceDto } from './dto/return-space.dto';
 import { Space } from './space.entity';
 import { SpacesRepository } from './spaces.repository';
@@ -49,6 +50,7 @@ describe('SpacesService', () => {
     space.name = createSpaceDto.name;
     space.description = createSpaceDto.description;
     space.occupation_max = 1;
+    space.plans = [];
     const resolvedSpace = new ReturnSpaceDto(space);
 
     jest.spyOn(repository, 'create').mockImplementationOnce(() => space);
@@ -67,7 +69,8 @@ describe('SpacesService', () => {
     space.name = faker.name.findName();
     space.description = faker.lorem.sentence();
     space.occupation_max = 1;
-    const resolvedSpace = new ReturnSpaceDto(space);
+    space.plans = [];
+    const resolvedSpace = new ReturnSpaceWithPlansDto(space);
 
     jest.spyOn(repository, 'findOne').mockImplementationOnce(() => {
       return Promise.resolve(space);
@@ -83,6 +86,7 @@ describe('SpacesService', () => {
     space.uuid = faker.unique.toString();
     space.name = faker.name.findName();
     space.occupation_max = 1;
+    space.plans = [];
 
     const resolvedSpaces = new ReturnFindSpacesDto();
     resolvedSpaces.spaces = [space];

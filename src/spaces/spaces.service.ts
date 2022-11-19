@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateSpaceDto } from './dto/create-space.dto';
 import { FindSpacesQueryDto } from './dto/find-spaces-query.dto';
 import { ReturnFindSpacesDto } from './dto/return-find-spaces.dto';
+import { ReturnSpaceWithPlansDto } from './dto/return-space-with-plans.dto';
 import { ReturnSpaceDto } from './dto/return-space.dto';
 import { UpdateSpaceDto } from './dto/update-space.dto';
 import { SpacesRepository } from './spaces.repository';
@@ -25,11 +26,16 @@ export class SpacesService {
   }
 
   async findOne(uuid: string): Promise<ReturnSpaceDto> {
-    const space = await this.spacesRepository.findOne({ uuid });
+    const space = await this.spacesRepository.findOne({
+      where: {
+        uuid: uuid,
+      },
+      relations: ['plans'],
+    });
     if (!space) {
       throw new Error('Espaço não encontrado');
     }
-    return new ReturnSpaceDto(space);
+    return new ReturnSpaceWithPlansDto(space);
   }
 
   async update(
