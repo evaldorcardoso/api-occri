@@ -16,7 +16,8 @@ export class PlansRepository extends Repository<Plan> {
 
     query.select([
       'plan.uuid',
-      'plan.name',
+      'plan.type',
+      'plan.value',
       'plan.description',
       'plan.created_at',
       'space',

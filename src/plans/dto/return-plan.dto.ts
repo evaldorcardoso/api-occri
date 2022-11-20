@@ -6,7 +6,7 @@ export class ReturnPlanDto {
   uuid: string;
 
   @ApiProperty()
-  name: string;
+  type: string;
 
   @ApiProperty()
   value: number;
@@ -15,13 +15,13 @@ export class ReturnPlanDto {
   space: string;
 
   @ApiProperty()
-  description: string;
+  description?: string;
 
   constructor(plan: Plan) {
     this.uuid = plan.uuid ? plan.uuid : null;
-    this.name = plan.name ? plan.name : null;
+    this.type = plan.type ? plan.type : null;
     this.value = plan.value ? plan.value : null;
     this.space = plan.space ? plan.space.uuid : null;
-    this.description = plan.description ? plan.description : null;
+    if (plan.description) this.description = plan.description;
   }
 }

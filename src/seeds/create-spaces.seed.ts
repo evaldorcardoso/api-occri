@@ -1,7 +1,7 @@
 import { Space } from '../spaces/space.entity';
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
-import { Plan } from 'src/plans/plan.entity';
+import { Plan, PLAN_TYPES } from 'src/plans/plan.entity';
 
 export default class CreateSpaces implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<any> {
@@ -47,42 +47,42 @@ export default class CreateSpaces implements Seeder {
       .values([
         {
           uuid: '61c75d17-bce2-476f-aa1f-5380bb5f7c5c',
-          name: 'Compartilhado por hora',
+          type: PLAN_TYPES.HOUR,
           value: 30,
           description: 'Compartilhado por hora',
           space: spaces[0],
         },
         {
           uuid: '61c75d17-bce2-476f-aa1f-5380bb5f7c5c',
-          name: 'Gravação por hora',
+          type: PLAN_TYPES.HOUR,
           value: 30,
           description: 'Gravação por hora',
           space: spaces[3],
         },
         {
           uuid: '5ee77669-b414-4d9e-8db9-aef2e427be9f',
-          name: 'Privativo por turno',
+          type: PLAN_TYPES.SHIFT,
           value: 100,
           description: 'Privativo por turno',
           space: spaces[2],
         },
         {
           uuid: '328d99d7-0bbd-4128-b2fc-64a2f233e2c5',
-          name: 'Salão, Eventos Diária',
+          type: PLAN_TYPES.DAY,
           value: 180,
           description: 'Salão, Eventos Diária',
           space: spaces[4],
         },
         {
           uuid: '2f891f6b-2307-468d-9888-01dc0c7da6e6',
-          name: 'Compartilhado por Mês',
+          type: PLAN_TYPES.MONTH,
           value: 1200,
           description: 'Compartilhado por Mês',
           space: spaces[0],
         },
         {
           uuid: '7d623de1-a0c8-433d-ab69-dfc8b404b0d3',
-          name: 'Salão, Eventos Datas Especiais',
+          type: PLAN_TYPES.HOUR,
           value: 500,
           description: 'Salão, Eventos Datas Especiais',
           space: spaces[4],

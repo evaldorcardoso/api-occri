@@ -18,7 +18,7 @@ services:
   #   networks:
   #     - api_occri_network
   database:
-    container_name: ${TYPEORM_HOST}
+    container_name: mysql
     image: 'mysql:8.0'
     ports:
       - "${TYPEORM_PORT}:${TYPEORM_PORT}"
@@ -33,7 +33,7 @@ services:
     container_name: 'phpmyadmin'
     image: phpmyadmin/phpmyadmin:latest
     links:
-     - database:${TYPEORM_HOST}
+     - database:mysql
     depends_on:
      - database
     ports:

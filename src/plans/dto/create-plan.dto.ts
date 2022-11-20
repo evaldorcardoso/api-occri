@@ -4,9 +4,9 @@ import { IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 export class CreatePlanDto {
   @ApiProperty()
   @IsNotEmpty({
-    message: 'Informe o nome do plano',
+    message: 'Informe o tipo do plano',
   })
-  name: string;
+  type: string;
 
   @ApiProperty()
   @IsNotEmpty({

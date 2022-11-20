@@ -36,7 +36,12 @@ export class PlansService {
   }
 
   async findOne(uuid: string): Promise<ReturnPlanDto> {
-    const plan = await this.plansRepository.findOne({ uuid });
+    const plan = await this.plansRepository.findOne({
+      where: {
+        uuid: uuid,
+      },
+      relations: ['space'],
+    });
     if (!plan) {
       throw new NotFoundException('Plano não encontrado');
     }

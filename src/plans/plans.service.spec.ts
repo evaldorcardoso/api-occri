@@ -5,7 +5,7 @@ import { Space } from '../spaces/space.entity';
 import { SpacesRepository } from '../spaces/spaces.repository';
 import { CreatePlanDto } from './dto/create-plan.dto';
 import { ReturnPlanDto } from './dto/return-plan.dto';
-import { Plan } from './plan.entity';
+import { Plan, PLAN_TYPES } from './plan.entity';
 import { PlansRepository } from './plans.repository';
 import { PlansService } from './plans.service';
 
@@ -18,7 +18,7 @@ function createPlan(
 ): Plan {
   const plan = new Plan();
   plan.uuid = uuid || faker.unique.toString();
-  plan.name = name || faker.name.firstName();
+  plan.type = name || faker.name.firstName();
   plan.description = description || faker.lorem.sentence();
   plan.value = value || faker.datatype.number();
   plan.space = space || new Space();
@@ -65,7 +65,7 @@ describe('PlansService', () => {
 
   it('should be able to create a plan', async () => {
     const createPlanDto = new CreatePlanDto();
-    createPlanDto.name = faker.name.findName();
+    createPlanDto.type = PLAN_TYPES.DAY; //faker.name.findName();
     createPlanDto.description = faker.lorem.sentence();
     createPlanDto.value = parseFloat(faker.commerce.price());
 
@@ -74,7 +74,7 @@ describe('PlansService', () => {
 
     const plan = createPlan(
       null,
-      createPlanDto.name,
+      createPlanDto.type,
       createPlanDto.description,
       createPlanDto.value,
       space,
