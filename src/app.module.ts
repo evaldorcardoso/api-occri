@@ -8,6 +8,7 @@ import { EventsModule } from './events/events.module';
 import { SchedulesModule } from './schedules/schedules.module';
 import { UsersRepository } from './users/users.repository';
 import { typeOrmConfig } from './config/typeorm.config';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { typeOrmConfig } from './config/typeorm.config';
     EventsModule,
     SchedulesModule,
     TypeOrmModule.forFeature([UsersRepository]),
+    HealthModule,
   ],
 })
 export class AppModule {}
