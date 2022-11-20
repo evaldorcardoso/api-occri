@@ -1,5 +1,6 @@
 import { Plan } from '../plan.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional } from 'class-validator';
 
 export class ReturnPlanDto {
   @ApiProperty()
@@ -12,16 +13,18 @@ export class ReturnPlanDto {
   value: number;
 
   @ApiProperty()
-  space: string;
+  @IsOptional()
+  space?: string;
 
   @ApiProperty()
+  @IsOptional()
   description?: string;
 
   constructor(plan: Plan) {
     this.uuid = plan.uuid ? plan.uuid : null;
     this.type = plan.type ? plan.type : null;
     this.value = plan.value ? plan.value : null;
-    this.space = plan.space ? plan.space.uuid : null;
+    if (plan.space) this.space = plan.space.uuid;
     if (plan.description) this.description = plan.description;
   }
 }

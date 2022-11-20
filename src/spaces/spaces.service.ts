@@ -25,7 +25,7 @@ export class SpacesService {
     return await this.spacesRepository.findSpaces(queryDto);
   }
 
-  async findOne(uuid: string): Promise<ReturnSpaceDto> {
+  async findOne(uuid: string): Promise<ReturnSpaceWithPlansDto> {
     const space = await this.spacesRepository.findOne({
       where: {
         uuid: uuid,

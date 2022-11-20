@@ -26,6 +26,7 @@ import { Role } from '../auth/role.decorator';
 import { UserRole } from '../users/user-roles.enum';
 import { ReturnFindSpacesDto } from './dto/return-find-spaces.dto';
 import { FindSpacesQueryDto } from './dto/find-spaces-query.dto';
+import { ReturnSpaceWithPlansDto } from './dto/return-space-with-plans.dto';
 
 @Controller('spaces')
 @ApiTags('Spaces')
@@ -46,8 +47,8 @@ export class SpacesController {
 
   @Get(':uuid')
   @ApiOperation({ summary: 'Find a Space by UUID' })
-  @ApiOkResponse({ type: ReturnSpaceDto })
-  async findOne(@Param('uuid') uuid: string): Promise<ReturnSpaceDto> {
+  @ApiOkResponse({ type: ReturnSpaceWithPlansDto })
+  async findOne(@Param('uuid') uuid: string): Promise<ReturnSpaceWithPlansDto> {
     return await this.spacesService.findOne(uuid);
   }
 
