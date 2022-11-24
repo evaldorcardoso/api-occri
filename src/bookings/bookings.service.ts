@@ -16,8 +16,7 @@ import { FindBookingsQueryDto } from './dto/find-bookings-query.dto';
 import { ReturnBookingDto } from './dto/return-booking.dto';
 import { ReturnFindBookingsDto } from './dto/return-find-bookings.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
-import { ScheduleRepository } from 'src/schedules/schedule.repository';
-import { FindSchedulesQueryDto } from 'src/schedules/dto/find-schedules-query.dto';
+import { ScheduleRepository } from '../schedules/schedule.repository';
 
 @Injectable()
 export class BookingsService {

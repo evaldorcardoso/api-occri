@@ -13,6 +13,7 @@ import { ReturnBookingDto } from './dto/return-booking.dto';
 import { ScheduleRepository } from '../schedules/schedule.repository';
 import { Schedule } from '../schedules/schedule.entity';
 import { SCHEDULE_STATUS } from '../schedules/ScheduleStatus';
+import { SpacesRepository } from '../spaces/spaces.repository';
 
 describe('BookingsService', () => {
   let service: BookingsService;
@@ -22,14 +23,17 @@ describe('BookingsService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        BookingsService,
-        {
+        BookingsService, {
           provide: BookingsRepository,
           useValue: {
             createBooking: jest.fn(),
             findOne: jest.fn(),
             findBookings: jest.fn(),
           },
+        },
+        {
+          provide: SpacesRepository,
+          useValue: {},
         },
         SchedulesService,
         {

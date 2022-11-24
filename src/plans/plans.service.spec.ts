@@ -5,6 +5,7 @@ import { Space } from '../spaces/space.entity';
 import { SpacesRepository } from '../spaces/spaces.repository';
 import { CreatePlanDto } from './dto/create-plan.dto';
 import { ReturnPlanDto } from './dto/return-plan.dto';
+import { UpdatePlanDto } from './dto/update-plan.dto';
 import { Plan, PLAN_TYPES } from './plan.entity';
 import { PlansRepository } from './plans.repository';
 import { PlansService } from './plans.service';
@@ -135,7 +136,12 @@ describe('PlansService', () => {
       return Promise.resolve(plan);
     });
 
-    const data = await service.update(plan.uuid, resolvedPlan);
+    let updatePlan = new UpdatePlanDto();
+    updatePlan.description = plan.description;
+    updatePlan.type = plan.type;
+    updatePlan.value = plan.value;
+
+    const data = await service.update(plan.uuid, updatePlan);
 
     expect(data).toEqual(resolvedPlan);
   });
