@@ -4,14 +4,11 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {}
+  constructor(private readonly reflector: Reflector) { }
 
   canActivate(
     context: ExecutionContext
   ): boolean | Promise<boolean> | Observable<boolean> {
-    // console.log(context.getArgByIndex(0).user;
-    // const request = context.switchToHttp().getRequest();
-    // const userRole = request.user.role;
     const userRole = context.getArgByIndex(0).user.role;
     const requiredRole = this.reflector.get<string[]>(
       'role',

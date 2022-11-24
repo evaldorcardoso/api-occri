@@ -40,7 +40,6 @@ export class FirebaseAuthStrategy extends PassportStrategy(
       .auth()
       .verifyIdToken(token, true)
       .catch((err) => {
-        console.log(err);
         throw new UnauthorizedException(err.message);
       });
     if (!firebaseAuth) {
@@ -62,7 +61,6 @@ export class FirebaseAuthStrategy extends PassportStrategy(
         await user.save();
         return user;
       } catch (error) {
-        console.log(error);
       }
     }
 
@@ -72,7 +70,6 @@ export class FirebaseAuthStrategy extends PassportStrategy(
       await user.save();
       return user;
     } catch (error) {
-      console.log(error);
     }
 
     return user;
