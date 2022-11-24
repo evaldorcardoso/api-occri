@@ -13,12 +13,12 @@ export class PlansService {
     @InjectRepository(PlansRepository)
     private plansRepository: PlansRepository,
     @InjectRepository(SpacesRepository)
-    private spacesRepository: SpacesRepository,
+    private spacesRepository: SpacesRepository
   ) {}
 
   async create(
     space: Space,
-    createPlanDto: CreatePlanDto,
+    createPlanDto: CreatePlanDto
   ): Promise<ReturnPlanDto> {
     const plan = this.plansRepository.create(createPlanDto);
     plan.space = space;
@@ -50,7 +50,7 @@ export class PlansService {
 
   async update(
     uuid: string,
-    updatePlanDto: UpdatePlanDto,
+    updatePlanDto: UpdatePlanDto
   ): Promise<ReturnPlanDto> {
     const result = await this.plansRepository.update({ uuid }, updatePlanDto);
     if (result.affected === 0) {

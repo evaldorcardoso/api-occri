@@ -33,7 +33,7 @@ export class PlansController {
   constructor(
     private readonly plansService: PlansService,
     @InjectRepository(SpacesRepository)
-    private spacesRepository: SpacesRepository,
+    private spacesRepository: SpacesRepository
   ) {}
 
   @Post('spaces/:uuid')
@@ -50,7 +50,7 @@ export class PlansController {
   @Role(UserRole.ADMIN)
   async createPlan(
     @Param('uuid') space: string,
-    @Body() createPlanDto: CreatePlanDto,
+    @Body() createPlanDto: CreatePlanDto
   ): Promise<ReturnPlanDto> {
     const spaceObject = await this.spacesRepository.findOne({
       uuid: space,
@@ -90,7 +90,7 @@ export class PlansController {
   @ApiOkResponse({ type: ReturnPlanDto })
   async update(
     @Param('uuid') uuid: string,
-    @Body() updatePlanDto: UpdatePlanDto,
+    @Body() updatePlanDto: UpdatePlanDto
   ): Promise<ReturnPlanDto> {
     return await this.plansService.update(uuid, updatePlanDto);
   }

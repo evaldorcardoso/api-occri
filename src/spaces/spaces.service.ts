@@ -12,7 +12,7 @@ import { SpacesRepository } from './spaces.repository';
 export class SpacesService {
   constructor(
     @InjectRepository(SpacesRepository)
-    private spacesRepository: SpacesRepository,
+    private spacesRepository: SpacesRepository
   ) {}
 
   async create(createSpaceDto: CreateSpaceDto): Promise<ReturnSpaceDto> {
@@ -40,7 +40,7 @@ export class SpacesService {
 
   async update(
     uuid: string,
-    updateSpaceDto: UpdateSpaceDto,
+    updateSpaceDto: UpdateSpaceDto
   ): Promise<ReturnSpaceDto> {
     const result = await this.spacesRepository.update({ uuid }, updateSpaceDto);
     if (result.affected === 0) {

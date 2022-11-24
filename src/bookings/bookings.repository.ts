@@ -11,7 +11,7 @@ import { FindBookingsQueryDto } from './dto/find-bookings-query.dto';
 export class BookingsRepository extends Repository<Booking> {
   async createBooking(
     user: User,
-    createBookingDto: CreateBookingDto,
+    createBookingDto: CreateBookingDto
   ): Promise<Booking> {
     const space = await Space.findOne({ uuid: createBookingDto.space });
     const plan = await Plan.findOne({ uuid: createBookingDto.plan });
@@ -43,7 +43,7 @@ export class BookingsRepository extends Repository<Booking> {
   }
 
   async findBookings(
-    queryDto: FindBookingsQueryDto,
+    queryDto: FindBookingsQueryDto
   ): Promise<{ bookings: Booking[]; total: number }> {
     queryDto.page = queryDto.page === undefined ? 1 : queryDto.page;
     queryDto.limit = queryDto.limit > 100 ? 100 : queryDto.limit;
@@ -61,7 +61,7 @@ export class BookingsRepository extends Repository<Booking> {
         'booking.space',
         'space',
         'space.id = booking.space_id AND space.id = :space_id',
-        { space_id: space_id.id },
+        { space_id: space_id.id }
       );
     } else {
       query.innerJoinAndSelect('booking.space', 'space');
@@ -76,7 +76,7 @@ export class BookingsRepository extends Repository<Booking> {
         'booking.user',
         'user',
         'user.id = booking.user_id AND user.id = :user_id',
-        { user_id: user_id.id },
+        { user_id: user_id.id }
       );
     } else {
       query.leftJoinAndSelect('booking.user', 'user');
@@ -91,7 +91,7 @@ export class BookingsRepository extends Repository<Booking> {
         'booking.plan',
         'plan',
         'plan.id = booking.plan_id AND plan.id = :plan_id',
-        { plan_id: plan_id.id },
+        { plan_id: plan_id.id }
       );
     } else {
       query.innerJoinAndSelect('booking.plan', 'plan');
@@ -126,4 +126,5 @@ export class BookingsRepository extends Repository<Booking> {
     const [bookings, total] = await query.getManyAndCount();
     return { bookings, total };
   }
+
 }

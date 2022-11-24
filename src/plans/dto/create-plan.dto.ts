@@ -18,7 +18,7 @@ export class CreatePlanDto {
     },
     {
       message: 'Informe um valor válido',
-    },
+    }
   )
   value: number;
 

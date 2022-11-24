@@ -7,7 +7,7 @@ export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
 
   canActivate(
-    context: ExecutionContext,
+    context: ExecutionContext
   ): boolean | Promise<boolean> | Observable<boolean> {
     // console.log(context.getArgByIndex(0).user;
     // const request = context.switchToHttp().getRequest();
@@ -15,7 +15,7 @@ export class RolesGuard implements CanActivate {
     const userRole = context.getArgByIndex(0).user.role;
     const requiredRole = this.reflector.get<string[]>(
       'role',
-      context.getHandler(),
+      context.getHandler()
     );
 
     if (!requiredRole) return true;

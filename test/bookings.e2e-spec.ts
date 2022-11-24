@@ -15,7 +15,7 @@ let userRepository: UsersRepository;
 async function createUser(
   role: UserRole,
   is_active = true,
-  userData?: CreateUserDto,
+  userData?: CreateUserDto
 ): Promise<User> {
   userData = userData
     ? userData

@@ -10,7 +10,7 @@ export class ReturnPlanDto {
   type: string;
 
   @ApiProperty()
-  value: number;
+  value?: number;
 
   @ApiProperty()
   @IsOptional()
@@ -23,7 +23,7 @@ export class ReturnPlanDto {
   constructor(plan: Plan) {
     this.uuid = plan.uuid ? plan.uuid : null;
     this.type = plan.type ? plan.type : null;
-    this.value = plan.value ? plan.value : null;
+    this.value = plan.value;
     if (plan.space) this.space = plan.space.uuid;
     if (plan.description) this.description = plan.description;
   }

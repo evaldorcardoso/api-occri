@@ -50,7 +50,7 @@ export class SchedulesController {
   @ApiOkResponse({ type: ReturnScheduleDto })
   async findAll(
     @Param('booking') booking: string,
-    @Query() query: FindSchedulesQueryDto,
+    @Query() query: FindSchedulesQueryDto
   ): Promise<ReturnFindSchedulesDto> {
     return await this.schedulesService.findAll(booking, query);
   }
@@ -70,7 +70,7 @@ export class SchedulesController {
   @ApiOkResponse({ type: ReturnScheduleDto })
   async update(
     @Param('uuid') uuid: string,
-    @Body() updateScheduleDto: UpdateScheduleDto,
+    @Body() updateScheduleDto: UpdateScheduleDto
   ): Promise<ReturnScheduleDto> {
     return await this.schedulesService.update(uuid, updateScheduleDto);
   }

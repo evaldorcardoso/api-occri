@@ -11,7 +11,7 @@ export class PlansRepository extends Repository<Plan> {
       'plan.space',
       'space',
       'space.id = plan.space_id AND space.id = :space_id',
-      { space_id },
+      { space_id }
     );
 
     query.select([

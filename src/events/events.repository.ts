@@ -6,7 +6,7 @@ import { Event } from './event.entity';
 export class EventsRepository extends Repository<Event> {
   async findEvents(
     booking_id: number,
-    queryDto: FindEventsQueryDto,
+    queryDto: FindEventsQueryDto
   ): Promise<{ events: Event[]; total: number }> {
     queryDto.page = queryDto.page === undefined ? 1 : queryDto.page;
     queryDto.limit = queryDto.limit > 100 ? 100 : queryDto.limit;
@@ -26,13 +26,13 @@ export class EventsRepository extends Repository<Event> {
         'event.booking',
         'booking',
         'booking.id = event.booking_id AND booking.id = :booking_id',
-        { booking_id },
+        { booking_id }
       );
     } else {
       query.leftJoinAndSelect(
         'event.booking',
         'booking',
-        'booking.id = event.booking_id',
+        'booking.id = event.booking_id'
       );
     }
 

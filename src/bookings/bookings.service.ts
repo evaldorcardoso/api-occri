@@ -5,6 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { SpacesRepository } from '../spaces/spaces.repository';
 import { SchedulesService } from '../schedules/schedules.service';
 import { SCHEDULE_STATUS } from '../schedules/ScheduleStatus';
 import { User } from '../users/user.entity';
@@ -15,6 +16,8 @@ import { FindBookingsQueryDto } from './dto/find-bookings-query.dto';
 import { ReturnBookingDto } from './dto/return-booking.dto';
 import { ReturnFindBookingsDto } from './dto/return-find-bookings.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
+import { ScheduleRepository } from 'src/schedules/schedule.repository';
+import { FindSchedulesQueryDto } from 'src/schedules/dto/find-schedules-query.dto';
 
 @Injectable()
 export class BookingsService {
@@ -23,11 +26,15 @@ export class BookingsService {
     private bookingsRepository: BookingsRepository,
     @Inject(SchedulesService)
     private schedulesService: SchedulesService,
-  ) {}
+    @InjectRepository(SpacesRepository)
+    private spacesRepository: SpacesRepository,
+    @InjectRepository(ScheduleRepository)
+    private schedulesRepository: ScheduleRepository
+  ) { }
 
   async create(
     user: User,
-    createBookingDto: CreateBookingDto,
+    createBookingDto: CreateBookingDto
   ): Promise<ReturnBookingDto> {
     if (!this.isValidCPF(createBookingDto.cpf)) {
       throw new BadRequestException('CPF inválido');
@@ -35,7 +42,7 @@ export class BookingsService {
 
     const booking = await this.bookingsRepository.createBooking(
       user,
-      createBookingDto,
+      createBookingDto
     );
 
     await this.schedulesService.create(booking.uuid, user, {
@@ -48,11 +55,11 @@ export class BookingsService {
 
   async update(
     uuid: string,
-    updateBookingDto: UpdateBookingDto,
+    updateBookingDto: UpdateBookingDto
   ): Promise<ReturnBookingDto> {
     const result = await this.bookingsRepository.update(
       { uuid },
-      updateBookingDto,
+      updateBookingDto
     );
 
     if (result.affected === 0) {
@@ -61,7 +68,7 @@ export class BookingsService {
 
     const booking = await this.bookingsRepository.findOne(
       { uuid },
-      { relations: ['schedule'] },
+      { relations: ['schedule'] }
     );
 
     if (
@@ -77,7 +84,7 @@ export class BookingsService {
   }
 
   async findAll(
-    queryDto: FindBookingsQueryDto,
+    queryDto: FindBookingsQueryDto
   ): Promise<ReturnFindBookingsDto> {
     const found = await this.bookingsRepository.findBookings(queryDto);
     return {
@@ -89,12 +96,27 @@ export class BookingsService {
   async findOne(uuid: string): Promise<ReturnBookingDto> {
     const booking = await this.bookingsRepository.findOne(
       { uuid },
-      { relations: ['user', 'space', 'plan'] },
+      { relations: ['user', 'space', 'plan'] }
     );
     if (!booking) {
       throw new NotFoundException('Reserva não encontrada');
     }
     return new ReturnBookingDto(booking);
+  }
+
+  async verifyAvailability(spaceUUID: string, startTime: Date, endTime: Date): Promise<boolean> {
+    const space = await this.spacesRepository.findOne({ uuid: spaceUUID });
+    if (!space) {
+      throw new BadRequestException('Espaço não encontrado');
+    }
+
+    if (startTime >= endTime) {
+      throw new BadRequestException('Intervalo inválido');
+    }
+
+    const schedules = await this.schedulesRepository.findAvailableSchedules(startTime, endTime, space.id);
+
+    return schedules.total < space.occupation_max;
   }
 
   async remove(uuid: string) {

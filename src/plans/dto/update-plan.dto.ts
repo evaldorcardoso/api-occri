@@ -14,7 +14,7 @@ export class UpdatePlanDto {
     },
     {
       message: 'Informe um valor válido',
-    },
+    }
   )
   value: number;
 

@@ -16,7 +16,7 @@ import { ReturnUserDto } from './dto/return-user.dto';
 export class UsersService {
   constructor(
     @InjectRepository(UsersRepository)
-    private userRepository: UsersRepository,
+    private userRepository: UsersRepository
   ) {}
 
   async createAdminUser(createUserDto: CreateUserDto): Promise<ReturnUserDto> {
@@ -29,7 +29,7 @@ export class UsersService {
       { uuid, is_active: true },
       {
         select: ['email', 'name', 'role', 'uuid'],
-      },
+      }
     );
 
     if (!user) throw new NotFoundException('Usuário não encontrado');
@@ -40,7 +40,7 @@ export class UsersService {
   async updateUser(updateUserDto: UpdateUserDto, uuid: string) {
     const result = await this.userRepository.update(
       { uuid, is_active: true },
-      updateUserDto,
+      updateUserDto
     );
     if (result.affected === 0) {
       throw new NotFoundException('Usuário não encontrado');
@@ -52,7 +52,7 @@ export class UsersService {
   async deleteUser(uuid: string) {
     const result = await this.userRepository.update(
       { uuid },
-      { is_active: false },
+      { is_active: false }
     );
     if (result.affected === 0) {
       throw new NotFoundException('Usuário não encontrado');
@@ -60,7 +60,7 @@ export class UsersService {
   }
 
   async findUsers(
-    queryDto: FindUsersQueryDto,
+    queryDto: FindUsersQueryDto
   ): Promise<{ users: User[]; total: number }> {
     return await this.userRepository.findUsers(queryDto);
   }

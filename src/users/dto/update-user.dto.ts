@@ -16,7 +16,7 @@ export class UpdateUserDto {
     {},
     {
       message: 'Informe um email válido',
-    },
+    }
   )
   email: string;
 

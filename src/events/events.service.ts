@@ -11,7 +11,7 @@ import { EventsRepository } from './events.repository';
 export class EventsService {
   constructor(
     @InjectRepository(EventsRepository)
-    private eventsRepository: EventsRepository,
+    private eventsRepository: EventsRepository
   ) {}
 
   async create(createEventDto: CreateEventDto): Promise<ReturnEventDto> {
@@ -22,7 +22,7 @@ export class EventsService {
 
   async findAll(
     booking_uuid: string,
-    queryDto: FindEventsQueryDto,
+    queryDto: FindEventsQueryDto
   ): Promise<ReturnFindEventsDto> {
     let booking;
 
@@ -37,7 +37,7 @@ export class EventsService {
 
     const found = await this.eventsRepository.findEvents(
       booking ? booking.id : 0,
-      queryDto,
+      queryDto
     );
 
     return {
@@ -56,7 +56,7 @@ export class EventsService {
 
   async update(
     uuid: string,
-    updateEventDto: UpdateEventDto,
+    updateEventDto: UpdateEventDto
   ): Promise<ReturnEventDto> {
     const result = await this.eventsRepository.update({ uuid }, updateEventDto);
     if (result.affected === 0) {

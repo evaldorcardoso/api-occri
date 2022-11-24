@@ -14,7 +14,7 @@ function createPlan(
   name?: string,
   description?: string,
   value?: number,
-  space?: Space,
+  space?: Space
 ): Plan {
   const plan = new Plan();
   plan.uuid = uuid || faker.unique.toString();
@@ -77,7 +77,7 @@ describe('PlansService', () => {
       createPlanDto.type,
       createPlanDto.description,
       createPlanDto.value,
-      space,
+      space
     );
     const resolvedPlan = new ReturnPlanDto(plan);
 

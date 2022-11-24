@@ -16,7 +16,7 @@ export class CreateUserDto {
     {},
     {
       message: 'Informe um endereço de email válido',
-    },
+    }
   )
   @MaxLength(100, {
     message: 'O email não pode ter mais de 100 caracteres',

@@ -9,6 +9,8 @@ import {
   Query,
   Patch,
   ValidationPipe,
+  Res,
+  HttpStatus,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -17,6 +19,8 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { Response, response } from 'express';
+import { Timestamp } from 'typeorm';
 import { FirebaseAuthGuard } from '../auth/firebase-auth.guard';
 import { GetUser } from '../auth/get-user.decorator';
 import { Role } from '../auth/role.decorator';
@@ -33,7 +37,7 @@ import { UpdateBookingDto } from './dto/update-booking.dto';
 @Controller('bookings')
 @ApiTags('Bookings')
 export class BookingsController {
-  constructor(private readonly bookingsService: BookingsService) {}
+  constructor(private readonly bookingsService: BookingsService) { }
 
   @Get('me')
   @UseGuards(FirebaseAuthGuard, RolesGuard)
@@ -42,7 +46,7 @@ export class BookingsController {
   @ApiOkResponse({ type: ReturnFindBookingsDto })
   async findMyBookings(
     @Query() query: FindBookingsQueryDto,
-    @GetUser() user: User,
+    @GetUser() user: User
   ): Promise<ReturnFindBookingsDto> {
     query.user = user.uuid;
     return await this.bookingsService.findAll(query);
@@ -57,6 +61,23 @@ export class BookingsController {
     return await this.bookingsService.findOne(uuid);
   }
 
+  @Get('/verify/:space/:start_time/:end_time')
+  @ApiOkResponse()
+  async verifyAvailability(
+    @Param('space') space: string,
+    @Param('start_time') startTime: Date,
+    @Param('end_time') endTime: Date,
+    @Res() res: Response) {
+
+    const available = await this.bookingsService.verifyAvailability(space, startTime, endTime);
+
+    const status = available ? 'available' : 'unavailable';
+
+    return res.json({
+      'status': status,
+    }).status(HttpStatus.OK)
+  }
+
   @Patch(':uuid')
   @UseGuards(FirebaseAuthGuard, RolesGuard)
   @Role(UserRole.ADMIN)
@@ -65,7 +86,7 @@ export class BookingsController {
   @ApiOkResponse({ type: ReturnBookingDto })
   async update(
     @Param('uuid') uuid: string,
-    @Body() updateBookingDto: UpdateBookingDto,
+    @Body() updateBookingDto: UpdateBookingDto
   ): Promise<ReturnBookingDto> {
     return await this.bookingsService.update(uuid, updateBookingDto);
   }
@@ -77,7 +98,7 @@ export class BookingsController {
   @ApiBearerAuth()
   @ApiOkResponse({ type: ReturnFindBookingsDto })
   async findAll(
-    @Query() query: FindBookingsQueryDto,
+    @Query() query: FindBookingsQueryDto
   ): Promise<ReturnFindBookingsDto> {
     return await this.bookingsService.findAll(query);
   }
@@ -89,7 +110,7 @@ export class BookingsController {
   @ApiCreatedResponse({ type: ReturnBookingDto })
   async create(
     @Body() createBookingDto: CreateBookingDto,
-    @GetUser() user: User,
+    @GetUser() user: User
   ): Promise<ReturnBookingDto> {
     return await this.bookingsService.create(user, createBookingDto);
   }
@@ -98,7 +119,7 @@ export class BookingsController {
   @ApiOperation({ summary: 'Register a new Booking (public)' })
   @ApiCreatedResponse({ type: ReturnBookingDto })
   async createPublic(
-    @Body(ValidationPipe) createBookingDto: CreateBookingDto,
+    @Body(ValidationPipe) createBookingDto: CreateBookingDto
   ): Promise<ReturnBookingDto> {
     return await this.bookingsService.create(null, createBookingDto);
   }

@@ -6,7 +6,7 @@ import { UserRole } from './user-roles.enum';
 @EntityRepository(User)
 export class UsersRepository extends Repository<User> {
   async findUsers(
-    queryDto: FindUsersQueryDto,
+    queryDto: FindUsersQueryDto
   ): Promise<{ users: User[]; total: number }> {
     queryDto.role =
       queryDto.role === undefined ? UserRole.ADMIN : queryDto.role;

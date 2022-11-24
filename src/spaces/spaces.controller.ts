@@ -40,7 +40,7 @@ export class SpacesController {
   @ApiCreatedResponse({ type: ReturnSpaceDto })
   @Role(UserRole.ADMIN)
   async create(
-    @Body() createSpaceDto: CreateSpaceDto,
+    @Body() createSpaceDto: CreateSpaceDto
   ): Promise<ReturnSpaceDto> {
     return await this.spacesService.create(createSpaceDto);
   }
@@ -56,7 +56,7 @@ export class SpacesController {
   @ApiOperation({ summary: 'Find all Spaces by filter query' })
   @ApiOkResponse({ type: ReturnFindSpacesDto })
   async findAll(
-    @Query() query: FindSpacesQueryDto,
+    @Query() query: FindSpacesQueryDto
   ): Promise<ReturnFindSpacesDto> {
     return await this.spacesService.findAll(query);
   }
@@ -69,7 +69,7 @@ export class SpacesController {
   @ApiOkResponse({ type: ReturnSpaceDto })
   async update(
     @Param('uuid') uuid: string,
-    @Body() updateSpaceDto: UpdateSpaceDto,
+    @Body() updateSpaceDto: UpdateSpaceDto
   ): Promise<ReturnSpaceDto> {
     return await this.spacesService.update(uuid, updateSpaceDto);
   }

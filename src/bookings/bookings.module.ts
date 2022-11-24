@@ -5,10 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BookingsRepository } from './bookings.repository';
 import { ScheduleRepository } from 'src/schedules/schedule.repository';
 import { SchedulesService } from 'src/schedules/schedules.service';
+import { SpacesRepository } from 'src/spaces/spaces.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([BookingsRepository, ScheduleRepository])],
+  imports: [TypeOrmModule.forFeature([BookingsRepository, ScheduleRepository, SpacesRepository])],
   controllers: [BookingsController],
   providers: [BookingsService, SchedulesService],
 })
-export class BookingsModule {}
+export class BookingsModule { }

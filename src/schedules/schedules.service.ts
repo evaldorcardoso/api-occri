@@ -15,13 +15,13 @@ export class SchedulesService {
     @InjectRepository(ScheduleRepository)
     private scheduleRepository: ScheduleRepository,
     @InjectRepository(BookingsRepository)
-    private bookingRepository: BookingsRepository,
-  ) {}
+    private bookingRepository: BookingsRepository
+  ) { }
 
   async create(
     booking_uuid: string,
     user: User,
-    createScheduleDto: CreateScheduleDto,
+    createScheduleDto: CreateScheduleDto
   ) {
     const booking = await this.bookingRepository.findOne({
       uuid: booking_uuid,
@@ -32,7 +32,7 @@ export class SchedulesService {
     const schedule = await this.scheduleRepository.createSchedule(
       user,
       booking,
-      createScheduleDto,
+      createScheduleDto
     );
 
     return new ReturnScheduleDto(schedule);
@@ -40,7 +40,7 @@ export class SchedulesService {
 
   async findAll(
     booking_uuid: string,
-    queryDto: FindSchedulesQueryDto,
+    queryDto: FindSchedulesQueryDto
   ): Promise<ReturnFindSchedulesDto> {
     let found;
     if (booking_uuid) {
@@ -50,9 +50,9 @@ export class SchedulesService {
       if (!booking) {
         throw new Error('Agendamento não encontrado');
       }
-      found = await this.scheduleRepository.findSchedules(booking.id, queryDto);
+      found = await this.scheduleRepository.findSchedules(queryDto, booking.id);
     } else {
-      found = await this.scheduleRepository.findSchedules(null, queryDto);
+      found = await this.scheduleRepository.findSchedules(queryDto);
     }
     return {
       schedules: found.schedules.map((event) => new ReturnScheduleDto(event)),
@@ -63,7 +63,7 @@ export class SchedulesService {
   async findOne(uuid: string) {
     const schedule = await this.scheduleRepository.findOne(
       { uuid },
-      { relations: ['booking'] },
+      { relations: ['booking'] }
     );
     if (!schedule) {
       throw new Error('Schedule not found');
@@ -74,14 +74,14 @@ export class SchedulesService {
   async update(uuid: string, updateScheduleDto: UpdateScheduleDto) {
     const result = await this.scheduleRepository.update(
       { uuid },
-      updateScheduleDto,
+      updateScheduleDto
     );
     if (result.affected === 0) {
       throw new Error('Agendamento não encontrado');
     }
     const schedule = await this.scheduleRepository.findOne(
       { uuid },
-      { relations: ['booking'] },
+      { relations: ['booking'] }
     );
     return new ReturnScheduleDto(schedule);
   }

@@ -35,7 +35,7 @@ export class EventsController {
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: CreateEventDto })
   async create(
-    @Body() createEventDto: CreateEventDto,
+    @Body() createEventDto: CreateEventDto
   ): Promise<ReturnEventDto> {
     return await this.eventsService.create(createEventDto);
   }
@@ -52,7 +52,7 @@ export class EventsController {
   @ApiOkResponse({ type: ReturnEventDto })
   async findAll(
     @Param('booking') booking: string,
-    @Query() query: FindEventsQueryDto,
+    @Query() query: FindEventsQueryDto
   ): Promise<ReturnFindEventsDto> {
     return await this.eventsService.findAll(booking, query);
   }
@@ -64,7 +64,7 @@ export class EventsController {
   @ApiOkResponse({ type: ReturnEventDto })
   async update(
     @Param('uuid') uuid: string,
-    @Body() updateEventDto: UpdateEventDto,
+    @Body() updateEventDto: UpdateEventDto
   ): Promise<ReturnEventDto> {
     return await this.eventsService.update(uuid, updateEventDto);
   }

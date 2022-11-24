@@ -11,12 +11,12 @@ require('dotenv').config({ silent: true });
 @Injectable()
 export class FirebaseAuthStrategy extends PassportStrategy(
   Strategy,
-  'firebase-auth',
+  'firebase-auth'
 ) {
   private defaultApp: any;
   constructor(
     @InjectRepository(UsersRepository)
-    private usersRepository: UsersRepository,
+    private usersRepository: UsersRepository
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
