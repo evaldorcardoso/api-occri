@@ -39,7 +39,7 @@ export class BookingsService {
       throw new BadRequestException('CPF inválido');
     }
 
-    if (!(this.verifyAvailability(createBookingDto.space, createBookingDto.start_time, createBookingDto.end_time))) {
+    if (!(await this.verifyAvailability(createBookingDto.space, createBookingDto.start_time, createBookingDto.end_time))) {
       throw new BadRequestException('Este espaço não tem mais vagas disponíveis')
     }
 

@@ -18,6 +18,7 @@ import { SpacesRepository } from '../spaces/spaces.repository';
 describe('BookingsService', () => {
   let service: BookingsService;
   let repository: BookingsRepository;
+  let spaceRepository: SpacesRepository;
   let scheduleRepository: ScheduleRepository;
 
   beforeEach(async () => {
@@ -33,7 +34,9 @@ describe('BookingsService', () => {
         },
         {
           provide: SpacesRepository,
-          useValue: {},
+          useValue: {
+            findOne: jest.fn(),
+          },
         },
         SchedulesService,
         {
@@ -50,6 +53,7 @@ describe('BookingsService', () => {
             createSchedule: jest.fn(),
             findOne: jest.fn(),
             findSchedules: jest.fn(),
+            findAvailableSchedules: jest.fn(),
           },
         },
       ],
@@ -57,6 +61,7 @@ describe('BookingsService', () => {
 
     service = module.get<BookingsService>(BookingsService);
     repository = module.get<BookingsRepository>(BookingsRepository);
+    spaceRepository = module.get<SpacesRepository>(SpacesRepository);
     scheduleRepository = module.get<ScheduleRepository>(ScheduleRepository);
   });
 
@@ -69,6 +74,9 @@ describe('BookingsService', () => {
     createBookingDto.plan = faker.datatype.uuid();
     createBookingDto.space = faker.datatype.uuid();
     createBookingDto.cpf = '41952767059';
+
+    const space = new Space();
+    space.occupation_max = 10;
 
     const user = new User();
 
@@ -94,6 +102,16 @@ describe('BookingsService', () => {
 
     jest.spyOn(repository, 'findOne').mockImplementationOnce(() => {
       return Promise.resolve(booking);
+    });
+
+    jest.spyOn(spaceRepository, 'findOne').mockImplementationOnce(() => {
+      return Promise.resolve(space);
+    });
+
+    jest.spyOn(scheduleRepository, 'findAvailableSchedules').mockImplementationOnce(() => {
+      return Promise.resolve({
+        total: 1
+      });
     });
 
     jest
