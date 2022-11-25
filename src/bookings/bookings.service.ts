@@ -5,6 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { SpacesRepository } from '../spaces/spaces.repository';
 import { SchedulesService } from '../schedules/schedules.service';
 import { SCHEDULE_STATUS } from '../schedules/ScheduleStatus';
@@ -17,6 +18,7 @@ import { ReturnBookingDto } from './dto/return-booking.dto';
 import { ReturnFindBookingsDto } from './dto/return-find-bookings.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { ScheduleRepository } from '../schedules/schedule.repository';
+import * as moment from 'moment';
 
 @Injectable()
 export class BookingsService {
@@ -30,6 +32,33 @@ export class BookingsService {
     @InjectRepository(ScheduleRepository)
     private schedulesRepository: ScheduleRepository
   ) { }
+
+  @Cron(CronExpression.EVERY_MINUTE, {
+    name: 'DeleteInactiveBookingsJob'
+  })
+  async triggerJobDeleteInactiveBookings() {
+    const noww = new Date();
+    console.log('job executing... ' + noww.toLocaleString())
+
+    const queryDto = new FindBookingsQueryDto();
+    queryDto.status = BOOKING_STATUS.CREATED;
+
+    const inactiveBookings = await this.bookingsRepository.findBookings(queryDto);
+    const _this = this;
+
+    inactiveBookings.bookings.forEach(async function (booking) {
+      const bd = new Date(booking.created_at);
+      const ma = moment();
+      const mb = moment(bd);
+      const diffInMinutes = ma.diff(mb, 'minutes');
+      console.log(diffInMinutes);
+
+      if (diffInMinutes > 60) {
+        console.log('Removing ' + booking.uuid)
+        await _this.remove(booking.uuid);
+      }
+    })
+  }
 
   async create(
     user: User,
