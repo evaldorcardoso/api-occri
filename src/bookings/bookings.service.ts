@@ -38,7 +38,7 @@ export class BookingsService {
   })
   async triggerJobDeleteInactiveBookings() {
     const noww = new Date();
-    console.log('job executing... ' + noww.toLocaleString())
+    // console.log('job executing... ' + noww.toLocaleString())
 
     const queryDto = new FindBookingsQueryDto();
     queryDto.status = BOOKING_STATUS.CREATED;
@@ -64,7 +64,16 @@ export class BookingsService {
     user: User,
     createBookingDto: CreateBookingDto
   ): Promise<ReturnBookingDto> {
+    if (createBookingDto.start_time.toString().length <= 10) {
+      createBookingDto.start_time = moment(createBookingDto.start_time).utc().startOf('day').toDate()
+    }
+
+    if (createBookingDto.end_time.toString().length <= 10) {
+      createBookingDto.end_time = moment(createBookingDto.end_time).utc().endOf('day').toDate()
+    }
+
     if (createBookingDto.start_time >= createBookingDto.end_time) {
+      // console.log(createBookingDto.start_time, createBookingDto.end_time);
       throw new BadRequestException('Intervalo inválido');
     }
 
@@ -144,6 +153,14 @@ export class BookingsService {
     const space = await this.spacesRepository.findOne({ uuid: spaceUUID });
     if (!space) {
       throw new BadRequestException('Espaço não encontrado');
+    }
+
+    if (startTime.toString().length <= 10) {
+      startTime = moment(startTime).utc().startOf('day').toDate()
+    }
+
+    if (endTime.toString().length <= 10) {
+      endTime = moment(endTime).utc().endOf('day').toDate()
     }
 
     if (startTime >= endTime) {

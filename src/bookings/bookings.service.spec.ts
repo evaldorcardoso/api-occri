@@ -74,6 +74,8 @@ describe('BookingsService', () => {
     createBookingDto.plan = faker.datatype.uuid();
     createBookingDto.space = faker.datatype.uuid();
     createBookingDto.cpf = '41952767059';
+    createBookingDto.start_time = new Date('2022-11-26T00:00:00')
+    createBookingDto.end_time = new Date('2022-11-26T10:00:00')
 
     const space = new Space();
     space.occupation_max = 10;
