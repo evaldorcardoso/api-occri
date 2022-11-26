@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ScheduleModule } from '@nestjs/schedule';
 import { UsersModule } from './users/users.module';
 import { SpacesModule } from './spaces/spaces.module';
 import { PlansModule } from './plans/plans.module';
@@ -27,6 +28,7 @@ import { HealthModule } from './health/health.module';
     SchedulesModule,
     TypeOrmModule.forFeature([UsersRepository]),
     HealthModule,
+    ScheduleModule.forRoot()
   ],
 })
-export class AppModule {}
+export class AppModule { }

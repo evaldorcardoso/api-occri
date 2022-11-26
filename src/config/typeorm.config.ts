@@ -10,6 +10,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
   autoLoadEntities: true,
   synchronize: true,
+  timezone: 'Z'
 };
 
 console.log(`running env: ${process.env.NODE_ENV || `DEFAULT`}`);
