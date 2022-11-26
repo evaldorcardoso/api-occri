@@ -64,6 +64,10 @@ export class BookingsService {
     user: User,
     createBookingDto: CreateBookingDto
   ): Promise<ReturnBookingDto> {
+    if (createBookingDto.start_time >= createBookingDto.end_time) {
+      throw new BadRequestException('Intervalo inválido');
+    }
+
     if (!this.isValidCPF(createBookingDto.cpf)) {
       throw new BadRequestException('CPF inválido');
     }

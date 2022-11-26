@@ -6,6 +6,7 @@ import { Space } from '../spaces/space.entity';
 import { Booking } from './booking.entity';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { FindBookingsQueryDto } from './dto/find-bookings-query.dto';
+import { BOOKING_STATUS } from './BookingStatus';
 
 @EntityRepository(Booking)
 export class BookingsRepository extends Repository<Booking> {
@@ -27,7 +28,7 @@ export class BookingsRepository extends Repository<Booking> {
     const booking = this.create();
     if (user) {
       booking.user = user;
-      booking.status = 'success';
+      booking.status = BOOKING_STATUS.COMPLETED;
     }
     booking.space = space;
     booking.plan = plan;

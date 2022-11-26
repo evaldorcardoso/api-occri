@@ -19,8 +19,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { Response, response } from 'express';
-import { Timestamp } from 'typeorm';
+import { Response } from 'express';
 import { FirebaseAuthGuard } from '../auth/firebase-auth.guard';
 import { GetUser } from '../auth/get-user.decorator';
 import { Role } from '../auth/role.decorator';
@@ -86,7 +85,7 @@ export class BookingsController {
   @ApiOkResponse({ type: ReturnBookingDto })
   async update(
     @Param('uuid') uuid: string,
-    @Body() updateBookingDto: UpdateBookingDto
+    @Body(ValidationPipe) updateBookingDto: UpdateBookingDto
   ): Promise<ReturnBookingDto> {
     return await this.bookingsService.update(uuid, updateBookingDto);
   }
@@ -109,7 +108,7 @@ export class BookingsController {
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: ReturnBookingDto })
   async create(
-    @Body() createBookingDto: CreateBookingDto,
+    @Body(ValidationPipe) createBookingDto: CreateBookingDto,
     @GetUser() user: User
   ): Promise<ReturnBookingDto> {
     return await this.bookingsService.create(user, createBookingDto);

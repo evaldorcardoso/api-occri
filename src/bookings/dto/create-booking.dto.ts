@@ -27,12 +27,18 @@ export class CreateBookingDto {
   name: string;
 
   @ApiProperty()
+  @IsNotEmpty({
+    message: 'Informe a Data de Início',
+  })
   @IsDateString({
     message: 'Informe a Data de Início',
   })
   start_time: Date;
 
   @ApiProperty()
+  @IsNotEmpty({
+    message: 'Informe a Data de Fim',
+  })
   @IsDateString({
     message: 'Informe a Data de Fim',
   })
