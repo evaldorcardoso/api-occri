@@ -6,9 +6,10 @@ import { FirebaseAuthGuard } from '../auth/firebase-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { UserRole } from '../users/user-roles.enum';
 import { Role } from '../auth/role.decorator';
-import { ApiBearerAuth, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @Controller('images')
+@ApiTags('Images')
 export class ImagesController {
   constructor(private readonly imagesService: ImagesService) { }
 
