@@ -1,5 +1,6 @@
 import faker from '@faker-js/faker';
 import { Test, TestingModule } from '@nestjs/testing';
+import { ImagesRepository } from '../images/images.repository';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { CreateSpaceDto } from './dto/create-space.dto';
 import { FindSpacesQueryDto } from './dto/find-spaces-query.dto';
@@ -29,6 +30,10 @@ describe('SpacesService', () => {
             delete: jest.fn(),
           },
         },
+        {
+          provide: ImagesRepository,
+          useValue: {}
+        }
       ],
     }).compile();
 
@@ -51,6 +56,7 @@ describe('SpacesService', () => {
     space.description = createSpaceDto.description;
     space.occupation_max = 1;
     space.plans = [];
+    space.images = [];
     const resolvedSpace = new ReturnSpaceDto(space);
 
     jest.spyOn(repository, 'create').mockImplementationOnce(() => space);
@@ -70,6 +76,7 @@ describe('SpacesService', () => {
     space.description = faker.lorem.sentence();
     space.occupation_max = 1;
     space.plans = [];
+    space.images = [];
     const resolvedSpace = new ReturnSpaceWithPlansDto(space);
 
     jest.spyOn(repository, 'findOne').mockImplementationOnce(() => {
@@ -109,6 +116,7 @@ describe('SpacesService', () => {
     space.uuid = faker.unique.toString();
     space.name = faker.name.findName();
     space.description = faker.lorem.sentence();
+    space.images = [];
     const resolvedSpace = new ReturnSpaceDto(space);
 
     jest.spyOn(repository, 'update').mockResolvedValue(new UpdateResult());

@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateImageDto } from '../images/dto/create-image.dto';
+import { ImagesRepository } from '../images/images.repository';
 import { CreateSpaceDto } from './dto/create-space.dto';
 import { FindSpacesQueryDto } from './dto/find-spaces-query.dto';
 import { ReturnFindSpacesDto } from './dto/return-find-spaces.dto';
@@ -12,12 +14,27 @@ import { SpacesRepository } from './spaces.repository';
 export class SpacesService {
   constructor(
     @InjectRepository(SpacesRepository)
-    private spacesRepository: SpacesRepository
-  ) {}
+    private spacesRepository: SpacesRepository,
+    @InjectRepository(ImagesRepository)
+    private imagesRepository: ImagesRepository
+  ) { }
 
   async create(createSpaceDto: CreateSpaceDto): Promise<ReturnSpaceDto> {
     const space = this.spacesRepository.create(createSpaceDto);
     await this.spacesRepository.save(space);
+    return new ReturnSpaceDto(space);
+  }
+
+  async addImage(spaceUuid: string, imageDto: CreateImageDto): Promise<ReturnSpaceDto> {
+    const image = this.imagesRepository.create(imageDto);
+    await this.imagesRepository.save(image);
+
+    const space = await this.spacesRepository.findOne({
+      where: { uuid: spaceUuid, }, relations: ['images']
+    });
+    space.images.push(image);
+    await this.spacesRepository.save(space);
+
     return new ReturnSpaceDto(space);
   }
 
@@ -30,7 +47,7 @@ export class SpacesService {
       where: {
         uuid: uuid,
       },
-      relations: ['plans'],
+      relations: ['plans', 'images'],
     });
     if (!space) {
       throw new Error('Espaço não encontrado');

@@ -1,6 +1,7 @@
-import { Space } from '../space.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { Space } from '../space.entity';
 import { ReturnPlanDto } from '../../plans/dto/return-plan.dto';
+import { ReturnImageDto } from '../../images/dto/return-image.dto';
 
 export class ReturnSpaceWithPlansDto {
   @ApiProperty()
@@ -24,6 +25,9 @@ export class ReturnSpaceWithPlansDto {
   @ApiProperty()
   plans: Array<ReturnPlanDto>;
 
+  @ApiProperty()
+  images: Array<ReturnImageDto>;
+
   constructor(space: Space) {
     this.uuid = space.uuid ? space.uuid : null;
     this.name = space.name ? space.name : null;
@@ -32,5 +36,6 @@ export class ReturnSpaceWithPlansDto {
     this.image_alt = space.image_alt ? space.image_alt : null;
     this.occupation_max = space.occupation_max ? space.occupation_max : null;
     this.plans = space.plans.map((plan) => new ReturnPlanDto(plan));
+    this.images = space.images.map((image) => new ReturnImageDto(image));
   }
 }
