@@ -5,12 +5,15 @@ import {
   CreateDateColumn,
   Entity,
   Generated,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
 import { Booking } from '../bookings/booking.entity';
+import { Image } from '../images/image.entity';
 
 @Entity()
 @Unique(['uuid'])
@@ -42,6 +45,14 @@ export class Space extends BaseEntity {
 
   @OneToMany(() => Booking, (booking) => booking.space)
   bookings: Booking[];
+
+  @ManyToMany(() => Image)
+  @JoinTable({
+    name: 'space_images',
+    joinColumn: { name: 'space_id' },
+    inverseJoinColumn: { name: 'image_id' }
+  })
+  images: Image[]
 
   @CreateDateColumn()
   created_at: Date;

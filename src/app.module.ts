@@ -10,6 +10,7 @@ import { SchedulesModule } from './schedules/schedules.module';
 import { UsersRepository } from './users/users.repository';
 import { typeOrmConfig } from './config/typeorm.config';
 import { HealthModule } from './health/health.module';
+import { ImagesModule } from './images/images.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { HealthModule } from './health/health.module';
     //     }),
     // }),
     UsersModule,
+    ImagesModule,
     SpacesModule,
     PlansModule,
     BookingsModule,

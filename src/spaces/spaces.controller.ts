@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { SpacesService } from './spaces.service';
 import { CreateSpaceDto } from './dto/create-space.dto';
@@ -27,11 +28,12 @@ import { UserRole } from '../users/user-roles.enum';
 import { ReturnFindSpacesDto } from './dto/return-find-spaces.dto';
 import { FindSpacesQueryDto } from './dto/find-spaces-query.dto';
 import { ReturnSpaceWithPlansDto } from './dto/return-space-with-plans.dto';
+import { CreateImageDto } from '../images/dto/create-image.dto';
 
 @Controller('spaces')
 @ApiTags('Spaces')
 export class SpacesController {
-  constructor(private readonly spacesService: SpacesService) {}
+  constructor(private readonly spacesService: SpacesService) { }
 
   @Post()
   @UseGuards(FirebaseAuthGuard, RolesGuard)
@@ -43,6 +45,19 @@ export class SpacesController {
     @Body() createSpaceDto: CreateSpaceDto
   ): Promise<ReturnSpaceDto> {
     return await this.spacesService.create(createSpaceDto);
+  }
+
+  @Post(':uuid/images')
+  @UseGuards(FirebaseAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @Role(UserRole.ADMIN)
+  @ApiOperation({ summary: 'Add a new image to this space' })
+  @ApiCreatedResponse({ type: ReturnSpaceDto })
+  async addImage(
+    @Body(ValidationPipe) createImageDto: CreateImageDto,
+    @Param('uuid') spaceUuid: string
+  ): Promise<ReturnSpaceDto> {
+    return await this.spacesService.addImage(spaceUuid, createImageDto);
   }
 
   @Get(':uuid')
@@ -69,7 +84,7 @@ export class SpacesController {
   @ApiOkResponse({ type: ReturnSpaceDto })
   async update(
     @Param('uuid') uuid: string,
-    @Body() updateSpaceDto: UpdateSpaceDto
+    @Body(ValidationPipe) updateSpaceDto: UpdateSpaceDto
   ): Promise<ReturnSpaceDto> {
     return await this.spacesService.update(uuid, updateSpaceDto);
   }

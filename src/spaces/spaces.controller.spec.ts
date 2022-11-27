@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { ImagesRepository } from '../images/images.repository';
 import { SpacesController } from './spaces.controller';
 import { SpacesRepository } from './spaces.repository';
 import { SpacesService } from './spaces.service';
@@ -15,6 +16,10 @@ describe('SpacesController', () => {
           provide: SpacesRepository,
           useValue: {},
         },
+        {
+          provide: ImagesRepository,
+          useValue: {}
+        }
       ],
     }).compile();
 
